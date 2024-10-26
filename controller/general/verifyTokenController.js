@@ -7,18 +7,15 @@ async function verifyTokenController(req, res) {
   // let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzA1MWUyY2QyMDQyN2E0Y2EwMWMyMGUiLCJyZWdpc3RlckFzIjoicHJvZmVzc2lvbmFsIiwiaWF0IjoxNzI4NDc0MzQ3fQ.j-Npp4350Ib2_cTg1sNotEqNhD1xyTkV6gDcKTVS7xkasd";
   let type = req.body.type;
   let auth = req.body.auth || false;
-  console.log(req.body);
-  console.log(auth);
   try {
     if(auth === false || !auth){
         let verify = await verification({ token: token });
-        console.log(verify);
 
         if (verify.verified === true || verify.verified) {
             let checkRegister = verify.userType;
             if (checkRegister === "client") {
                 if (type === "client") {
-                    console.log("client > client");
+                    // console.log("client > client");
                     let d = await ClientsData.findOne({ _id: verify._id }).select({
                         clientFName: 1,
                         clientFullName: 1,
@@ -32,9 +29,6 @@ async function verifyTokenController(req, res) {
                         completeProfileRegistration: 1,
                         clientCountry : 1
                     });
-                    console.log(d);
-
-
                     if (d === null) {
                         throw Error("No Data Found, please login again.");
                     }
@@ -53,14 +47,13 @@ async function verifyTokenController(req, res) {
                             country : d.clientCountry,
                             totalBidPoints : null
                         }]
-                        console.log(data)
                         res.status(200).json({ status: "success", userStatus: "SUCCESS",userType : "client" ,msg: "User is verified", verified: true, userId: verify._id, data: data });
 
                     }
                 }
                 else {
                     
-                    console.log("client > professional");
+                    // console.log("client > professional");
                     let d = await ProfessionalsData.findOne({ _id: verify._id }).select({
                         professionalFName: 1,
                         professionalFullName: 1,
@@ -73,9 +66,9 @@ async function verifyTokenController(req, res) {
                         registerAs: 1,
                         completeProfileRegistration: 1,
                         professionalCountry  : 1,
-                        professionalTotalBidPoints : 1
+                        professionalTotalBidPoints : 1,
+                        membershipStatus : 1,
                     });
-                    console.log(d);
                     if (d === null) {
                         throw Error("No Data Found, please login again.");
                     }
@@ -94,8 +87,8 @@ async function verifyTokenController(req, res) {
                             isRegsitrationComplete: d.completeProfileRegistration,
                             country : d.professionalCountry,
                             totalBidPoints : d.professionalTotalBidPoints,
+                            membershipStatus : d.membershipStatus,
                         }]
-                        console.log(data)
                         res.status(200).json({ status: "success", userStatus: "SUCCESS",userType : "professional" ,msg: "User is verified", verified: true, userId: verify._id, data: data });
 
                     }
@@ -138,7 +131,6 @@ async function verifyTokenController(req, res) {
                             country : d.clientCountry,
                             totalBidPoints : null
                         }]
-                        console.log(data)
                         res.status(200).json({ status: "success", userStatus: "SUCCESS", userType : "client" ,msg: "User is verified", verified: true, userId: verify._id, data: data });
 
                     }
@@ -156,7 +148,8 @@ async function verifyTokenController(req, res) {
                         registerAs: 1,
                         completeProfileRegistration: 1,
                         professionalCountry  : 1,
-                        professionalTotalBidPoints : 1
+                        professionalTotalBidPoints : 1,
+                        membershipStatus : 1
                     });
                     if (d === null) {
                         throw Error("No Data Found, please login again.");
@@ -176,8 +169,8 @@ async function verifyTokenController(req, res) {
                             isRegsitrationComplete: d.completeProfileRegistration,
                             country : d.professionalCountry,
                             totalBidPoints : d.professionalTotalBidPoints,
+                            membershipStatus : d.membershipStatus,
                         }]
-                        console.log(data)
                         res.status(200).json({ status: "success", userStatus: "SUCCESS", userType : "professional" ,msg: "User is verified", verified: true, userId: verify._id, data: data });
 
                     }
@@ -194,9 +187,8 @@ async function verifyTokenController(req, res) {
     if (verify.verified === true || verify.verified) {
       if (type === "client") {
         let checkRegister = verify.userType;
-        console.log(checkRegister);
         if (checkRegister === "client") {
-          console.log("client > client");
+          // console.log("client > client");
           let d = await ClientsData.findOne({ _id: verify._id }).select({
             clientFName: 1,
             clientFullName: 1,
@@ -210,7 +202,6 @@ async function verifyTokenController(req, res) {
             completeProfileRegistration: 1,
             clientCountry: 1,
           });
-          console.log(d);
 
           if (d === null) {
             throw Error("No Data Found, please login again.");
@@ -231,7 +222,6 @@ async function verifyTokenController(req, res) {
                 totalBidPoints : null
               },
             ];
-            console.log(data);
             res
               .status(200)
               .json({
@@ -245,7 +235,7 @@ async function verifyTokenController(req, res) {
               });
           }
         } else {
-          console.log("client > professional");
+          // console.log("client > professional");
           let d = await ProfessionalsData.findOne({ _id: verify._id }).select({
             professionalFName: 1,
             professionalFullName: 1,
@@ -258,9 +248,9 @@ async function verifyTokenController(req, res) {
             registerAs: 1,
             completeProfileRegistration: 1,
             professionalCountry: 1,
-            professionalTotalBidPoints : 1
+            professionalTotalBidPoints : 1,
+            membershipStatus : 1,
           });
-          console.log(d);
           if (d === null) {
             throw Error("No Data Found, please login again.");
           } else {
@@ -278,9 +268,9 @@ async function verifyTokenController(req, res) {
                 isRegsitrationComplete: d.completeProfileRegistration,
                 country: d.professionalCountry,
                 totalBidPoints : d.professionalTotalBidPoints,
+                membershipStatus : d.membershipStatus,
               },
             ];
-            console.log(data);
             res
               .status(200)
               .json({
@@ -298,7 +288,7 @@ async function verifyTokenController(req, res) {
       else{
         let checkRegister = verify.userType;
       if (checkRegister === "client") {
-          console.log("professional>client");
+          // console.log("professional>client");
           let d = await ClientsData.findOne({ _id: verify._id }).select({
             clientFName: 1,
             clientFullName: 1,
@@ -331,7 +321,6 @@ async function verifyTokenController(req, res) {
                 country: d.clientCountry,
               },
             ];
-            console.log(data);
             res
               .status(200)
               .json({
@@ -357,7 +346,8 @@ async function verifyTokenController(req, res) {
             registerAs: 1,
             completeProfileRegistration: 1,
             professionalCountry: 1,
-            professionalTotalBidPoints : 1
+            professionalTotalBidPoints : 1,
+            membershipStatus : 1,
           });
           if (d === null) {
             throw Error("No Data Found, please login again.");
@@ -376,9 +366,9 @@ async function verifyTokenController(req, res) {
                 isRegsitrationComplete: d.completeProfileRegistration,
                 country: d.professionalCountry,
                 totalBidPoints : d.professionalTotalBidPoints,
+                membershipStatus : d.membershipStatus,
               },
             ];
-            console.log(data);
             res
               .status(200)
               .json({
