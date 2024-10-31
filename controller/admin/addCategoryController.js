@@ -18,8 +18,19 @@ async function addCategoryController(req, res){
         //     {point : 15, category : "technology", clientBudget : "0-3000"},
         //     {point : 20, category : "technology", clientBudget : "0-3000+"},
         // ]
+        // let points = [
+        //     {point : 5, amount : 3},
+        //     {point : 10, amount : 8},
+        //     {point : 15, amount : 12},
+        //     {point : 20, amount : 15.2},
+        //     {point : 30, amount : 21},
+        //     {point : 50, amount : 30},
+        //     {point : 100, amount : 65},
+        // ];
+        // data.points = points;
         // data.pointRules= rule;
         // await data.save();
+        
         let data = await AdminFeaturesData.find();
         let s ={
             category : c,
@@ -28,7 +39,8 @@ async function addCategoryController(req, res){
         data[0].category.push(c);
         data[0].services.push(s);
         await data[0].save();
-        res.status(200).json({status: "success", userStatus : "SUCCESS" , message : `${category} added successfully to categories section.`});
+
+        res.status(200).json({status: "success", userStatus : "SUCCESS" , });
     }
     catch(e){
         console.log("Error while adding categories project", e);

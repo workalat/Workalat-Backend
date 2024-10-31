@@ -6,12 +6,12 @@ async function walletTopupProfessionalController(req, res){
     let professionalId = req.body.professionalId;
     try{
         let product = await stripe.products.create({
-            name : "Wallet Topup"
+            name : `Wallet Topup  | £${amount} (+£${amount* 0.2})VAT`
         });
         if(product){
             let price = await stripe.prices.create({
                 product : `${product.id}`,
-                unit_amount : amount*100,
+                unit_amount : (amount*100) + (amount*100) * 0.2,
                 currency : "gbp"
             });
             if(price.id){ 
@@ -37,7 +37,7 @@ async function walletTopupProfessionalController(req, res){
                     }], 
                     mode : "payment",
                     success_url : `${process.env.CLIENT_URL}/wallet/success?sessionId={CHECKOUT_SESSION_ID}`,
-                    cancel_url : `${process.env.CLIENT_URL}/wallet/error`,
+                    cancel_url : `${process.env.CLIENT_URL}/wallet/`,
                     customer: customer.id,
                     metadata: {
                         points : points,

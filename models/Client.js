@@ -30,7 +30,7 @@ let ClientsDataSchema  = new mongoose.Schema({
    },
    activeChat:{
     type : Boolean,
-    default : false
+    default : true
    },
    myRequest : {
     type : Boolean,

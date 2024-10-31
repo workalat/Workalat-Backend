@@ -4,11 +4,12 @@ let stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 async function purchaseMembershipController(req, res){
     let professionalId  = req.body.professionalId;
     let memberShipAmount = 34.99;
-    let taxOnMembershipAmount  = 6.998;
-    let totalAmount = parseFloat(memberShipAmount+taxOnMembershipAmount);
-    console.log(memberShipAmount,taxOnMembershipAmount,totalAmount);
-    console.log(typeof(memberShipAmount),typeof(taxOnMembershipAmount),typeof(totalAmount));
-    console.log(`${process.env.CLIENT_URL}/membership/success?sessionId={CHECKOUT_SESSION_ID}`)
+    // let taxOnMembershipAmount  = 6.998;
+    // let totalAmount = parseFloat(memberShipAmount+taxOnMembershipAmount);
+    let totalAmount = parseFloat(memberShipAmount);
+    // console.log(memberShipAmount,taxOnMembershipAmount,totalAmount);
+    // console.log(typeof(memberShipAmount),typeof(taxOnMembershipAmount),typeof(totalAmount));
+    // console.log(`${process.env.CLIENT_URL}/membership/success?sessionId={CHECKOUT_SESSION_ID}`)
     try{
         
         let professionalData = await ProfessionalsData.findOne({_id : professionalId});
@@ -18,7 +19,8 @@ async function purchaseMembershipController(req, res){
         }
 
         let product = await stripe.products.create({
-            name : `Membership Purchase  | £${memberShipAmount} (+£${taxOnMembershipAmount}) VAT`
+            // name : `Membership Purchase  | £${memberShipAmount} (+£${taxOnMembershipAmount}) VAT`
+            name : `Membership Purchase  | £${memberShipAmount}`
         });
 
         if(product){
@@ -27,7 +29,6 @@ async function purchaseMembershipController(req, res){
                 unit_amount : Math.round(totalAmount * 100),
                 currency : "gbp"
             });
-            console.log("Price", price)
             if(price.id){
                 let session = await stripe.checkout.sessions.create({
                     line_items : [{
@@ -36,12 +37,12 @@ async function purchaseMembershipController(req, res){
                     }],
                     mode : "payment",
                     success_url : `${process.env.CLIENT_URL}/membership/success?sessionId={CHECKOUT_SESSION_ID}`,
-                    cancel_url :   `${process.env.CLIENT_URL}/membership/error`,
+                    cancel_url :   `${process.env.CLIENT_URL}/membership/`,
                     metadata: {
                         professionalId : professionalId,
                         professionalName : professionalData.professionalFullName,
                         transactionAmount : memberShipAmount,
-                        transactionAmountTax : taxOnMembershipAmount,
+                        transactionAmountTax : 6.998,
                         totalTransactionAmount : totalAmount,
                         transactionPurpose : "Membership Purchase",
                         transactionDes : `Membership purchasing by ${professionalId} paid £${totalAmount}.`,

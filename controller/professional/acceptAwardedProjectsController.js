@@ -39,11 +39,12 @@ async function acceptAwardedProjectsController(req, res) {
         }
       } else {
         
-        project.projectStatusProfessional = "awarded";
+        project.projectStatusProfessional = "pending";
         project.projectStatusClient = "pending";
+        project.awardedStatus = "unawarded";
         project.awardedProfessionalId = "";
-
         await AwardedData.deleteOne({_id : project.awardedDetails});
+        project.awardedDetails = "";
         await project.save();
         res.status(200).json({status : "success", userStatus: "SUCCESS", message: "Project Declined Successfully"});
       }

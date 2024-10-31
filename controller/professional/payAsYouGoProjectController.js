@@ -13,12 +13,13 @@ async function payAsYouGoProjectController(req, res){
             let adminFeatureData  = await AdminFeaturesData.findOne().select({points : 1});
             let amount;
             adminFeatureData.points.map((val)=>{
-                // console.log(val.point , projectData.pointsNeeded)
+                console.log(val.point , projectData.pointsNeeded)
                 if(val.point === projectData.pointsNeeded){
+                    
                     amount = val.amount
                 }
             })
-            // console.log("amount" , amount);
+            console.log("amount" , amount);
             if(projectData !== null && professionalData!== null){
                 if(projectData.maxBid<1){
                     res.status(400).json({status : "fail", userStatus: "FAIL", message : "You can not bid on this project, beause the maximum number of bid on this project has been reached"})   
@@ -42,7 +43,7 @@ async function payAsYouGoProjectController(req, res){
                             }],
                             mode : "payment",
                             success_url : `${process.env.CLIENT_URL}/leads/success?sessionId={CHECKOUT_SESSION_ID}`,
-                            cancel_url : `${process.env.CLIENT_URL}/leads/error`,
+                            cancel_url : `${process.env.CLIENT_URL}/leads/`,
                             metadata: {
                                 points : projectData.pointsNeeded,
                                 projectId : projectId,

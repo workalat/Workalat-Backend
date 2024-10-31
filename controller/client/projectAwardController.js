@@ -80,13 +80,14 @@ async function projectAwardController(req, res){
                 ProjectStatusProfessional : "pending",
                 paymentCompleteStatus : "incomplete",
                 awardedTimeStamp : Date.now()
-            });
+            }); 
     
     
             projectData.confirmedPrice = projectConfirmAmount;
             projectData.paidPrice = 0;
             projectData.awardedId = award._id;
             projectData.awardedStatus = "awarded";
+            projectData.projectStatusClient = "awarded";
             // projectData.milestoneDetails = milestone;
             projectData.awardedDetails = award._id;
             projectData.awardedTimeStamp = award.awardedTimeStamp;

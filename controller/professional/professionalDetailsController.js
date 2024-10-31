@@ -23,12 +23,13 @@ async function professionalDetailsController(req, res){
             totalProjectsCompleted : 1,
             professionalSkills : 1
         });
-        // console.log(data);
+        console.log(data);
         if(data !== null){
             res.status(200).json({status : "success", userStatus : "SUCCESS", message : "Data Found Successfully" ,data : data});
         }
         else{
-            res.status(400).json({status : "fail", userStatus : "FAIL", message : "No Data Found" ,data : null});
+            throw new Error("No Data Found")
+            // res.status(400).json({status : "fail", userStatus : "FAIL", message : "No Data Found" ,data : null});
         }
     }
     catch(e){

@@ -14,6 +14,16 @@ async function createTicketController(req, res){
        let ticketCreatorName = req.body.ticketCreatorName; 
        let ticketStatus = req.body.ticketStatus; //active / closed / admin /customer
        let ticketMessages = req.body.ticketMessages;
+       let ticketNumber;
+       console.log(ticketDepartment);
+       
+       let findDepartAndGenerateId = await TicketsData.find({ticketDepartment : ticketDepartment}).countDocuments();
+       if(ticketDepartment === "finance"){
+        ticketNumber = `#FN-00${findDepartAndGenerateId+1}`
+       }
+       else if(ticketDepartment === "technical"){
+        ticketNumber = `#TN-00${findDepartAndGenerateId+1}`
+       }
 
 
         let message_name;
@@ -61,6 +71,7 @@ async function createTicketController(req, res){
             ticketProjectId : ticketProjectId,
             ticketCreatedBy : ticketCreatedBy,
             ticketCreatorId  : ticketCreatorId,
+                ticketNumber : ticketNumber,
             ticketCreatorName : ticketCreatorName,
             ticketStatus : status,
             ticketMessages : message

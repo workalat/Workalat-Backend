@@ -31,6 +31,10 @@ let TicketsSchema  = new mongoose.Schema({
         type : String,
         default : ""
     },
+    ticketNumber : {
+        type : String,
+        default : ""
+    },
     ticketStatus : {
         type : String,
         default : ""   //active / closed / onClient / onProfessional / onAdmin

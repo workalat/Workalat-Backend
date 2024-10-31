@@ -29,6 +29,7 @@ async function verifyTokenController(req, res) {
                         completeProfileRegistration: 1,
                         clientCountry : 1,
                         clientRegisterationType : 1,
+                        adminAccessClient : 1
 
                     });
                     if (d === null) {
@@ -48,7 +49,8 @@ async function verifyTokenController(req, res) {
                             isRegsitrationComplete: d.completeProfileRegistration,
                             country : d.clientCountry,
                             totalBidPoints : null,
-                            registrationType : d.clientRegisterationType 
+                            registrationType : d.clientRegisterationType,
+                            adminAccess : d.adminAccessClient 
                         }]
                         res.status(200).json({ status: "success", userStatus: "SUCCESS",userType : "client" ,msg: "User is verified", verified: true, userId: verify._id, data: data });
 
@@ -71,7 +73,8 @@ async function verifyTokenController(req, res) {
                         professionalCountry  : 1,
                         professionalTotalBidPoints : 1,
                         membershipStatus : 1,
-                        professionalRegisterationType : 1
+                        professionalRegisterationType : 1,
+                        adminAccessProfessional : 1,
                     });
                     if (d === null) {
                         throw Error("No Data Found, please login again.");
@@ -92,7 +95,8 @@ async function verifyTokenController(req, res) {
                             country : d.professionalCountry,
                             totalBidPoints : d.professionalTotalBidPoints,
                             membershipStatus : d.membershipStatus,
-                            registrationType : d.professionalRegisterationType
+                            registrationType : d.professionalRegisterationType,
+                            adminAccess : d.adminAccessProfessional
                         }]
                         res.status(200).json({ status: "success", userStatus: "SUCCESS",userType : "professional" ,msg: "User is verified", verified: true, userId: verify._id, data: data });
 
@@ -117,6 +121,7 @@ async function verifyTokenController(req, res) {
                         completeProfileRegistration: 1,
                         clientCountry : 1,
                         clientRegisterationType : 1,
+                        adminAccessClient : 1
                     });
 
                     if (d === null) {
@@ -136,7 +141,8 @@ async function verifyTokenController(req, res) {
                             isRegsitrationComplete: d.completeProfileRegistration,
                             country : d.clientCountry,
                             totalBidPoints : null,
-                            registrationType : d.clientRegisterationType 
+                            registrationType : d.clientRegisterationType,
+                            adminAccess : d.adminAccessClient 
                         }]
                         res.status(200).json({ status: "success", userStatus: "SUCCESS", userType : "client" ,msg: "User is verified", verified: true, userId: verify._id, data: data });
 
@@ -157,7 +163,8 @@ async function verifyTokenController(req, res) {
                         professionalCountry  : 1,
                         professionalTotalBidPoints : 1,
                         membershipStatus : 1,
-                        professionalRegisterationType : 1
+                        professionalRegisterationType : 1,
+                        adminAccessProfessional : 1,
                     });
                     if (d === null) {
                         throw Error("No Data Found, please login again.");
@@ -178,7 +185,8 @@ async function verifyTokenController(req, res) {
                             country : d.professionalCountry,
                             totalBidPoints : d.professionalTotalBidPoints,
                             membershipStatus : d.membershipStatus,
-                            registrationType : d.professionalRegisterationType
+                            registrationType : d.professionalRegisterationType,
+                            adminAccess : d.adminAccessProfessional
                         }]
                         res.status(200).json({ status: "success", userStatus: "SUCCESS", userType : "professional" ,msg: "User is verified", verified: true, userId: verify._id, data: data });
 
@@ -211,6 +219,7 @@ async function verifyTokenController(req, res) {
             completeProfileRegistration: 1,
             clientCountry: 1,
             clientRegisterationType : 1,
+            adminAccessClient : 1
           });
 
           if (d === null) {
@@ -230,7 +239,8 @@ async function verifyTokenController(req, res) {
                 isRegsitrationComplete: d.completeProfileRegistration,
                 country: d.clientCountry,
                 totalBidPoints : null,
-                registrationType : d.clientRegisterationType 
+                registrationType : d.clientRegisterationType ,
+                adminAccess : d.adminAccessClient 
               },
             ];
             res
@@ -261,7 +271,8 @@ async function verifyTokenController(req, res) {
             professionalCountry: 1,
             professionalTotalBidPoints : 1,
             membershipStatus : 1,
-            professionalRegisterationType : 1
+            professionalRegisterationType : 1,
+            adminAccessProfessional : 1,
           });
           if (d === null) {
             throw Error("No Data Found, please login again.");
@@ -281,7 +292,8 @@ async function verifyTokenController(req, res) {
                 country: d.professionalCountry,
                 totalBidPoints : d.professionalTotalBidPoints,
                 membershipStatus : d.membershipStatus,
-                registrationType : d.professionalRegisterationType
+                registrationType : d.professionalRegisterationType,
+                adminAccess : d.adminAccessProfessional
               },
             ];
             res
@@ -315,6 +327,7 @@ async function verifyTokenController(req, res) {
             completeProfileRegistration: 1,
             clientCountry: 1,
             clientRegisterationType : 1,
+            adminAccessClient : 1
           });
 
           if (d === null) {
@@ -333,7 +346,8 @@ async function verifyTokenController(req, res) {
                 registerAs: d.registerAs,
                 isRegsitrationComplete: d.completeProfileRegistration,
                 country: d.clientCountry,
-                registrationType : d.clientRegisterationType 
+                registrationType : d.clientRegisterationType ,
+                adminAccess : d.adminAccessClient 
               },
             ];
             res
@@ -345,7 +359,7 @@ async function verifyTokenController(req, res) {
                 msg: "User is verified",
                 verified: true,
                 userId: verify._id,
-                data: data,
+                data: data, 
               });
           }
         } else {
@@ -363,7 +377,8 @@ async function verifyTokenController(req, res) {
             professionalCountry: 1,
             professionalTotalBidPoints : 1,
             membershipStatus : 1,
-            professionalRegisterationType : 1
+            professionalRegisterationType : 1,
+            adminAccessProfessional : 1,
           });
           if (d === null) {
             throw Error("No Data Found, please login again.");
@@ -383,7 +398,8 @@ async function verifyTokenController(req, res) {
                 country: d.professionalCountry,
                 totalBidPoints : d.professionalTotalBidPoints,
                 membershipStatus : d.membershipStatus,
-                registrationType : d.professionalRegisterationType
+                registrationType : d.professionalRegisterationType,
+                adminAccess : d.adminAccessProfessional
               },
             ];
             res

@@ -25,17 +25,24 @@ transporter.verify((e, success)=>{
     }
 });
 
+function formatOtpForReading(otp) {
+    // Split the OTP into individual characters and join them with pauses or commas
+    return otp.toString().split('').join(', ');
+  }
+
 
 
 async function sendOtpVerificationPhone(userId ,phoneNo, res){
     console.log(userId ,phoneNo);
     try{
         let otp = Math.floor(1000 + Math.random() * 9000);
+        const formattedOtp = formatOtpForReading(otp);
+        console.log("Formatted Otp: " + formattedOtp);
         client.calls
         .create({
             to: phoneNo,
             from: "+447458914253", // Your Twilio number
-            twiml: `<Response><Say>Your verification code is ${otp} Not again your verification code is ${otp}. </Say></Response>`, // Message that will be read to the user
+            twiml: `<Response><Say><prosody rate="85%">Your verification code is ${formattedOtp}.             Again your verification code is ${formattedOtp}              .</prosody>        </Say></Response>`, // Message that will be read to the user
         })
         .then(call => console.log( "Call Sid" ,call.sid))
         .catch(error => console.error('Error making call:', error));
