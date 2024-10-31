@@ -10,7 +10,7 @@ let ProfessionalDataSchema  = new mongoose.Schema({
         lowercase : true,
         default : ""
    },
-   professionalLName : {
+   professionalLName : { 
         type : String,
         lowercase : true,
         default : ""
@@ -360,7 +360,7 @@ let ProfessionalDataSchema  = new mongoose.Schema({
         token: {
             type: String
         }
-    }],
+    }], 
     membershipLeads : {
         type : Number,
         default : 0

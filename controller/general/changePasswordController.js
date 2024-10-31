@@ -11,13 +11,19 @@ async function changePasswordController(req, res){
     try{
         if(userType === "client"){
             let userData = await ClientsData.findOne({_id : userId}).select({clientPassword : 1, ChangingDates : 1 ,clientRegisterationType : 1});
+            console.log(userData);
             if(userData === null){
-                res.status(400).json({status : "fail", userStatus : "FAIL", message : "No Data Found, please login again."});
+                throw new Error("No Data Found, please login again.")
             }
             else{
-                    console.log(userData);
+                if((userData.clientRegisterationType === "google" || userData.clientRegisterationType === "linkedin") && (userData.clientPassword === null || userData.clientPassword === undefined || userData.clientPassword.length < 1 )){
+                    userData.clientPassword = newPassword;
+                    userData.ChangingDates[0].passwordLast = Date.now();
+                    await userData.save();
+                    res.status(200).json({status : "success", userStatus : "SUCCESS", message : "Password changed Successfully"});
+                }
+                else{
                     let verify = await bcrypt.compare(oldPassword, userData.clientPassword);
-                    console.log(verify)    
                     if(verify === true || verify){
                         userData.clientPassword = newPassword;
                         userData.ChangingDates[0].passwordLast = Date.now();
@@ -27,21 +33,29 @@ async function changePasswordController(req, res){
                     else{
                         throw new Error("Incorrect password, Please Enter Currect Password.")
                     }
+                }
             }
         }
         else{
             let userData = await ProfessionalsData.findOne({_id : userId}).select({professionalPassword : 1,professionalRegisterationType :1 , ChangingDates : 1});
                 console.log(userData);
-                let verify = await bcrypt.compare(oldPassword, userData.professionalPassword);
-                console.log(verify)    
-                if(verify === true || verify){
+                if((userData.clientRegisterationType === "google" || userData.clientRegisterationType === "linkedin") && (userData.professionalPassword === null || userData.professionalPassword === undefined || userData.professionalPassword.length < 1 )){
                     userData.professionalPassword = newPassword;
                     userData.ChangingDates[0].passwordLast = Date.now();
                     await userData.save();
                     res.status(200).json({status : "success", userStatus : "SUCCESS", message : "Password changed Successfully"});
                 }
                 else{
-                    throw new Error("Incorrect password, Please Enter Currect Password.")
+                    let verify = await bcrypt.compare(oldPassword, userData.professionalPassword);
+                    if(verify === true || verify){
+                        userData.professionalPassword = newPassword;
+                        userData.ChangingDates[0].passwordLast = Date.now();
+                        await userData.save();
+                        res.status(200).json({status : "success", userStatus : "SUCCESS", message : "Password changed Successfully"});
+                    }
+                    else{
+                        throw new Error("Incorrect password, Please Enter Currect Password.")
+                    }
                 }
         }
 

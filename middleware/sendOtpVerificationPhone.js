@@ -31,8 +31,6 @@ async function sendOtpVerificationPhone(userId ,phoneNo, res){
     console.log(userId ,phoneNo);
     try{
         let otp = Math.floor(1000 + Math.random() * 9000);
-        // console.log(phoneNo, typeof(phoneNo));
-        // console.log(parseInt(phoneNo), typeof(parseInt(phoneNo)));
         client.calls
         .create({
             to: phoneNo,

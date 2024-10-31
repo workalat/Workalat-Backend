@@ -19,6 +19,7 @@ async function professionalCheckBidController(req, res){
         }
         else{
             let eligible = true;
+            console.log("Eligible");
         if(project.proposals.length>0){
             let verify = project.proposals.map((val)=>{
                 console.log(val.professionalId === userId)
@@ -27,8 +28,11 @@ async function professionalCheckBidController(req, res){
                     return 0;
                     }
             });
+            
+            console.log("Already applied");
         }
         if(project.maxBid === 0){
+            console.log("Max Limit");
             eligible  = false;
         }
         if(data === null){

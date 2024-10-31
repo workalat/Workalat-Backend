@@ -318,10 +318,11 @@ async function projectFilterController(req, res){
 
         // Filter out projects that already have a proposal from the professional
         let finalData;
-        if(projects.length>0){
+        if(projects.length>1){
             finalData = projects.filter(project => {
-                if(project.proposals.length>1){
-                return !data.proposals.some(proposal => proposal.projectId = project._id); 
+                if(project.proposals.length>0){
+                    let isApplied = data.proposals.some((proposal) => {return(proposal.professionalId == data._id)});
+                    return !isApplied; 
                 }
                 return(project);
              }).map(project => {
@@ -330,6 +331,7 @@ async function projectFilterController(req, res){
                 delete projectWithoutProposals.proposals;
                 return projectWithoutProposals;
             });
+            
             res.status(200).json({ status: "success", userStatus: "SUCCESS", message: "Data Found Successfully", data: finalData });
         }
         else{

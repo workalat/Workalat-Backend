@@ -8,7 +8,7 @@ let ClientsDataSchema  = new mongoose.Schema({
         type : String,
         lowercase: true,
         default : "" 
-   },
+   }, 
    clientLName : {
         type : String,
         lowercase: true,
@@ -19,7 +19,6 @@ let ClientsDataSchema  = new mongoose.Schema({
         lowercase: true,
         default : ""
    },
-
    //Toggles
    isTwoFactAuth : {  //true / false
     type : Boolean,
