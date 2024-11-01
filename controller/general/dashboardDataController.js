@@ -41,6 +41,7 @@ async function dashboardDataController(req, res){
                     totalRatings : data.totalRatings,
                     totalReviews : data.totalReviews,
                     userBio : data.professionalBio,
+                    kycStatus : data.kycStatus,
                     isEmailVerify : data.isprofessionalEmailVerify,
                     isPhoneVerify : data.isprofessionalPhoneNoVerify,
                     isProfileComplete : data.completeProfileRegistration,

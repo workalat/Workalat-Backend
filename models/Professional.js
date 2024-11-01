@@ -232,7 +232,7 @@ let ProfessionalDataSchema  = new mongoose.Schema({
     },
     adminAccessProfessional : {
         type : Boolean,
-        default : false 
+        default : true 
     },
     isprofessionalBidAccess : {
         type : Boolean,

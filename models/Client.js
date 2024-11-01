@@ -146,7 +146,7 @@ let ClientsDataSchema  = new mongoose.Schema({
     },
     adminAccessClient : {
         type : Boolean,
-        default : false
+        default : true
     },
     completeProfileRegistration : {
         type : Boolean,
