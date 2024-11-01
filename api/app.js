@@ -240,6 +240,10 @@ app.use("/signinEmail", signinEmailRoute);
 //CLIENT AND PROFESSIONAL SIGIN WITH GOOGLE
 app.use("/signinGoogle", signinGoogleRoute);
 
+
+//CLIENT AND PROFESSIONAL SIGIN WITH GOOGLE
+app.use("/signinLinkedin", signinLinkedinRoute);
+
 //IF THE CLIENT OR PROFESSIONAL REQUEST TO CHANGE THEIR EMAIL
 app.use("/changeEmail", changeEmailRoute);
 

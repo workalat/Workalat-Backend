@@ -18,7 +18,7 @@ async function switchIntoClientController(req, res){
         else{
             let professionalData = await ProfessionalsData.findOne({_id : professionalId});
             console.log(professionalData);
-            if( professionalData.professionalPassword !== null){ 
+            if( professionalData.professionalPassword != null){ 
                 
                 let dates ={
                     passwordLast: Date.now(),

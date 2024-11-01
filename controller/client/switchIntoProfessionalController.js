@@ -6,11 +6,8 @@ let stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 async function switchIntoProfessionalController(req, res){
     let clientId = req.body.clientId;
-    // console.log(clientId);
     try{      
         let professionalVerify = await ProfessionalsData.find({clientId : clientId});
-        console.log( "Professional" ,professionalVerify);
-        console.log(professionalVerify.length>0)
 
         if(professionalVerify.length>0){
             let token = await professionalVerify[0].generateAuthToken();
@@ -20,10 +17,9 @@ async function switchIntoProfessionalController(req, res){
         }
         else{
             let clientData = await ClientsData.findOne({_id : clientId});
-            console.log(clientData);
             if(clientData !== null){
-                if(clientData.clientPassword !== null){
-                    
+                if(clientData.clientPassword != null){
+                    console.log("With password");
                     let dates ={
                         passwordLast: Date.now(),
                         twoFactAuthLast : Date.now(),
@@ -62,6 +58,7 @@ async function switchIntoProfessionalController(req, res){
         
                     }
                     else{ 
+                        console.log("Without password");
                     let dates ={
                         passwordLast: Date.now(),
                         twoFactAuthLast : Date.now(),
@@ -74,7 +71,7 @@ async function switchIntoProfessionalController(req, res){
                         professionalFullName : clientData.clientFullName,
                         isprofessionalEmailVerify : clientData.isClientEmailVerify,
                         professionalEmail : clientData.clientEmail,
-                        professionalPassword : clientData.clientPassword,
+                        // professionalPassword : clientData.clientPassword,
                         professionalPhoneNo : clientData.clientPhoneNo,
                         isprofessionalPhoneNoVerify : clientData.isClientPhoneNoVerify,
                         isprofessionalPicture : clientData.isClientPicture,
