@@ -55,7 +55,7 @@ async function sendOtpVerificationPhone(userId ,phoneNo, res){
             userId: userId,
             otp: hashedOtp,
             createdAt: Date.now(),
-            expiredAt : Date.now()+3600000
+            expiredAt : Date.now()+ 5 * 60 * 1000
         });
         console.log(newOtpVerification);
         await newOtpVerification.save();

@@ -20,8 +20,8 @@ async function signinEmailController(req, res) {
                             if(verify || verify === true){ //Check if the password send is same
                                 if(clientsData.isTwoFactAuth || clientsData.isTwoFactAuth === true){
                                     sendOtpVerificationEmail({
-                                        _id: clientCheck._id,
-                                        email: clientCheck.clientEmail,
+                                        _id: clientsData._id,
+                                        email: clientsData.clientEmail,
                                         userType: "client",
                                         verificationType: "email",
                                         verificationFor: "signin verification",
@@ -101,8 +101,8 @@ async function signinEmailController(req, res) {
                     console.log("Register as client");
                     if(clientsData.isTwoFactAuth || clientsData.isTwoFactAuth === true){
                         sendOtpVerificationEmail({
-                            _id: clientCheck._id,
-                            email: clientCheck.clientEmail,
+                            _id: clientsData._id,
+                            email: clientsData.clientEmail,
                             userType: "client",
                             verificationType: "email",
                             verificationFor: "signin verification",
@@ -156,8 +156,8 @@ async function signinEmailController(req, res) {
             else if(verifyClient === true && verifyProfessional === false){
                 if(clientsData.isTwoFactAuth || clientsData.isTwoFactAuth === true){
                     sendOtpVerificationEmail({
-                        _id: clientCheck._id,
-                        email: clientCheck.clientEmail,
+                        _id: clientsData._id,
+                        email: clientsData.clientEmail,
                         userType: "client",
                         verificationType: "email",
                         verificationFor: "signin verification",
@@ -215,8 +215,8 @@ async function signinEmailController(req, res) {
                 if(verifyClient ===  true){
                     if(clientsData.isTwoFactAuth || clientsData.isTwoFactAuth === true){
                         sendOtpVerificationEmail({
-                            _id: clientCheck._id,
-                            email: clientCheck.clientEmail,
+                            _id: clientsData._id,
+                            email: clientsData.clientEmail,
                             userType: "client",
                             verificationType: "email",
                             verificationFor: "signin verification",
@@ -295,7 +295,7 @@ async function signinEmailController(req, res) {
 
 
         // // Check if the user is a client first
-        // let clientCheck = await ClientsData.findOne({ clientEmail: email });
+        // let clientsData = await ClientsData.findOne({ clientEmail: email });
         
         // if (clientCheck !== null && userType === "client") {
         //     console.log("Client");

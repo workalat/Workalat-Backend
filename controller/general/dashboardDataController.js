@@ -30,6 +30,14 @@ async function dashboardDataController(req, res){
         }
         else{
             let data = await ProfessionalsData.findOne({_id : userId});
+
+
+            
+
+
+
+
+
             // console.log(data.isPaymentVerify);
             if(data === null){
                 throw new Error ("No user Found, please login again");

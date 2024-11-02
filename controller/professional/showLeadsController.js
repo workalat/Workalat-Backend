@@ -3,7 +3,9 @@ let ProjectsData = require("../../models/Project");
 
 async function showLeadsController(req, res) {
     try {
-        let { userId } = req.body;
+        let  userId  = req.body.userId;
+        let choice = req.body.choice; //leads, dashboard
+        console.log(req.body);
 
         // Fetch the professional's data
         let data = await ProfessionalsData.findOne({ _id: userId }).select({
@@ -47,7 +49,6 @@ async function showLeadsController(req, res) {
                                 { serviceDes: { $regex: bioRegex } }
                             ]
                         },
-                        // Match based on professional skills with serviceNeeded or serviceDes using $or
                         {
                             $or: skillsRegexArray.map(skillRegex => ({
                                 $or: [
@@ -56,9 +57,6 @@ async function showLeadsController(req, res) {
                                 ]
                             }))
                         },
-                        // Match location based on postal codes
-                        // { serviceLocationPostal: { $in: data.professionalServiceLocPostCodes } },
-                        // Filter other project criteria
                         { maxBid: { $gt: 0 } },
                         { projectStatusAdmin: true },
                         { awardedStatus: "unawarded" }
@@ -96,17 +94,6 @@ async function showLeadsController(req, res) {
                                 { serviceDes: { $regex: bioRegex } }
                             ]
                         },
-                        // Match based on professional skills with serviceNeeded or serviceDes using $or
-                        // {
-                        //     $or: skillsRegexArray.map(skillRegex => ({
-                        //         $or: [
-                        //             { serviceNeeded: { $regex: skillRegex } },
-                        //             { serviceDes: { $regex: skillRegex } }
-                        //         ]
-                        //     }))
-                        // },
-                        // Match location based on postal codes
-                        // { serviceLocationPostal: { $in: data.professionalServiceLocPostCodes } },
                         // Filter other project criteria
                         { maxBid: { $gt: 0 } },
                         { projectStatusAdmin: true },
@@ -239,6 +226,7 @@ async function showLeadsController(req, res) {
         // Filter out projects that already have a proposal from the professional
         // console.log(projects.length);
         let finalData;
+        console.log("Projects", projects.length);
         if(projects.length>0){
             finalData = projects.filter(project => {
                 if(project.proposals.length>0){
@@ -253,10 +241,22 @@ async function showLeadsController(req, res) {
                 return projectWithoutProposals;
             });
             
-            res.status(200).json({ status: "success", userStatus: "SUCCESS", message: "Data Found Successfully", data: finalData });
+        console.log("Final", finalData.length);
+            
+            if(choice === "leads"){
+                res.status(200).json({ status: "success", userStatus: "SUCCESS", message: "Data Found Successfully", data: finalData });
+            }
+            else if(choice === "dashboard"){
+                res.status(200).json({ status: "success", userStatus: "SUCCESS", message: "Data Found Successfully", data: finalData.length });
+            }
         }
         else{
-            res.status(200).json({ status: "success", userStatus: "SUCCESS", message: "Data Found Successfully", data: [] });
+            if(choice === "leads"){
+                res.status(200).json({ status: "success", userStatus: "SUCCESS", message: "Data Found Successfully", data: [] });
+            }
+            else if(choice === "dashboard"){
+                res.status(200).json({ status: "success", userStatus: "SUCCESS", message: "Data Found Successfully",data: 0 });
+            }
         }
 
         // console.log(finalData);

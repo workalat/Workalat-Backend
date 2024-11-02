@@ -19,10 +19,10 @@ async function createTicketController(req, res){
        
        let findDepartAndGenerateId = await TicketsData.find({ticketDepartment : ticketDepartment}).countDocuments();
        if(ticketDepartment === "finance"){
-        ticketNumber = `#FN-00${findDepartAndGenerateId+1}`
+        ticketNumber = `#TK/FIN-00${findDepartAndGenerateId+1}`
        }
        else if(ticketDepartment === "technical"){
-        ticketNumber = `#TN-00${findDepartAndGenerateId+1}`
+        ticketNumber = `#TK/TEC-00${findDepartAndGenerateId+1}`
        }
 
 

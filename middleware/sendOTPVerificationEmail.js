@@ -24,7 +24,7 @@ transporter.verify((e, success)=>{
 async function sendOtpVerificationEmail({_id, email, userType,verificationType, verificationFor, accountCreation}, res){
     try{
         console.log("Called otp function");
-        console.log("id: ",_id, "email: " , email, "VT : " ,verificationType,"VF: " ,verificationFor );
+        console.log(process.env.USER);
         let otp = `${Math.floor(1000+Math.random()*9000)}`;
         console.log(otp);
  
@@ -45,7 +45,8 @@ async function sendOtpVerificationEmail({_id, email, userType,verificationType, 
             verificationType : verificationType,
             verificationFor : verificationFor,
             createdAt: Date.now(),
-            expiredAt : Date.now()+3600000
+            expiredAt : Date.now()+ 5 * 60 * 1000
+
         });
         console.log(newOtpVerification);
         await newOtpVerification.save();

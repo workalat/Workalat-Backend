@@ -72,9 +72,10 @@ async function verifyTokenController(req, res) {
                         completeProfileRegistration: 1,
                         professionalCountry  : 1,
                         professionalTotalBidPoints : 1,
-                        membershipStatus : 1,
+                        membershipStatus : 1, 
                         professionalRegisterationType : 1,
                         adminAccessProfessional : 1,
+                        professionalCompanyName  : 1,
                     });
                     if (d === null) {
                         throw Error("No Data Found, please login again.");
@@ -96,7 +97,8 @@ async function verifyTokenController(req, res) {
                             totalBidPoints : d.professionalTotalBidPoints,
                             membershipStatus : d.membershipStatus,
                             registrationType : d.professionalRegisterationType,
-                            adminAccess : d.adminAccessProfessional
+                            adminAccess : d.adminAccessProfessional,
+                            companyName : d.professionalCompanyName 
                         }]
                         res.status(200).json({ status: "success", userStatus: "SUCCESS",userType : "professional" ,msg: "User is verified", verified: true, userId: verify._id, data: data });
 
@@ -165,6 +167,7 @@ async function verifyTokenController(req, res) {
                         membershipStatus : 1,
                         professionalRegisterationType : 1,
                         adminAccessProfessional : 1,
+                        professionalCompanyName : 1
                     });
                     if (d === null) {
                         throw Error("No Data Found, please login again.");
@@ -186,7 +189,8 @@ async function verifyTokenController(req, res) {
                             totalBidPoints : d.professionalTotalBidPoints,
                             membershipStatus : d.membershipStatus,
                             registrationType : d.professionalRegisterationType,
-                            adminAccess : d.adminAccessProfessional
+                            adminAccess : d.adminAccessProfessional,
+                            companyName : d.professionalCompanyName 
                         }]
                         res.status(200).json({ status: "success", userStatus: "SUCCESS", userType : "professional" ,msg: "User is verified", verified: true, userId: verify._id, data: data });
 
@@ -273,6 +277,7 @@ async function verifyTokenController(req, res) {
             membershipStatus : 1,
             professionalRegisterationType : 1,
             adminAccessProfessional : 1,
+            professionalCompanyName : 1
           });
           if (d === null) {
             throw Error("No Data Found, please login again.");
@@ -293,7 +298,8 @@ async function verifyTokenController(req, res) {
                 totalBidPoints : d.professionalTotalBidPoints,
                 membershipStatus : d.membershipStatus,
                 registrationType : d.professionalRegisterationType,
-                adminAccess : d.adminAccessProfessional
+                adminAccess : d.adminAccessProfessional,
+                companyName : d.professionalCompanyName 
               },
             ];
             res
@@ -379,6 +385,7 @@ async function verifyTokenController(req, res) {
             membershipStatus : 1,
             professionalRegisterationType : 1,
             adminAccessProfessional : 1,
+            professionalCompanyName : 1
           });
           if (d === null) {
             throw Error("No Data Found, please login again.");
@@ -399,7 +406,8 @@ async function verifyTokenController(req, res) {
                 totalBidPoints : d.professionalTotalBidPoints,
                 membershipStatus : d.membershipStatus,
                 registrationType : d.professionalRegisterationType,
-                adminAccess : d.adminAccessProfessional
+                adminAccess : d.adminAccessProfessional,
+                companyName : d.professionalCompanyName 
               },
             ];
             res

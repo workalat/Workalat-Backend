@@ -42,21 +42,21 @@ async function getSingleProjectController(req, res){
 
                 });
             }
-            console.log(projectsData);
             if(projectsData === null){
                 throw new Error("No data Found")
             }
             else{
                 if(projectsData.awardedStatus === "awarded"){
                     if(userType === "client"){
-                        
+                    console.log("Yes here")
                     let professionalDetails = await ProfessionalsData.findOne({_id : projectsData.awardedProfessionalId}).select({
                         professionalFullName : 1,
                         professionalChatId : 1,
                         professionalEmail : 1,
                         professionalPictureLink : 1,
-                        professionalPhoneNo : 1
-                    })
+                        professionalPhoneNo : 1,
+                        professionalCompanyName : 1,
+                    });
                     let data = {
                         projectDes : projectsData.serviceDes,
                         projectTitle : projectsData.serviceTitle,

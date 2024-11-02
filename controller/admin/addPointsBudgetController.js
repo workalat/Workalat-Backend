@@ -1,10 +1,10 @@
 let AdminFeaturesData = require("../../models/AdminFeatures");
 async function addPointsBudgetController(req, res){
     try{
-        let points = req.body.points; //Category/Service
+        let points = req.body.points; // 5, 10
         let category = req.body.category; //Name of category/service
-        let frequency = req.body.frequency; //Array of slugs/Questions
-        let budget = req.body.budget;
+        let frequency = req.body.frequency; // daily, monthly, one-off
+        let budget = req.body.budget; //150, 500, 3000, 
         console.log(req.body);
 
         let adminFeatureData = await  AdminFeaturesData.findOne();
