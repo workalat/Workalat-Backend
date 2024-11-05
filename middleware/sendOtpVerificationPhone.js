@@ -11,7 +11,7 @@ const client = new twilio(accountSid, authToken);
 
 let transporter = nodemailer.createTransport({
     host : process.env.HOST,
-    auth : {
+    auth : { 
         user : process.env.USER,
         pass : process.env.PASS
     }

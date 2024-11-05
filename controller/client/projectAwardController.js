@@ -81,6 +81,20 @@ async function projectAwardController(req, res){
                 paymentCompleteStatus : "incomplete",
                 awardedTimeStamp : Date.now()
             }); 
+
+
+            if(projectData.proposals.length>0){
+                await Promise.all(
+                    projectData.proposals.map(async (val)=>{
+                        let professional = await ProfessionalsData.findOne({_id : val.professionalId}).select({professionalTotalBidPoints : 1, projectStatus : 1});
+                        console.log(professional);
+                        if(professional || professional !== null){
+                            professional.professionalTotalBidPoints += 0.5 * parseFloat(projectData.pointsNeeded);
+                            await professional.save();
+                        }
+                    })
+                );
+            }
     
     
             projectData.confirmedPrice = projectConfirmAmount;

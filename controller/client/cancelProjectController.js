@@ -22,7 +22,7 @@ async function cancelProjectController(req, res){
                     let professional = await ProfessionalsData.findOne({_id : val.professionalId}).select({professionalTotalBidPoints : 1, projectStatus : 1});
                     console.log(professional);
                     if(professional || professional !== null){
-                        professional.professionalTotalBidPoints +=  0.5 * parseFloat(project.pointsNeeded);
+                        professional.professionalTotalBidPoints += project.pointsNeeded;
                         console.log(professional.professionalTotalBidPoints)
                         await professional.save();
                     }
