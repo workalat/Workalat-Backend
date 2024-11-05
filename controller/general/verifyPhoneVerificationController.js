@@ -9,10 +9,13 @@ async function verifyPhoneVerificationController(req, res){
         let userType = req.body.userType;
         let userId = req.body.userId;
         let phoneNo= req.body.phoneNo;
+        console.log(req.body);
          
             if(userType === "client"){
+                console.log("Checking client")
                let find = await ClientsData.find({clientPhoneNo :phoneNo}).countDocuments();
-               if(find){ 
+               console.log("Phone number found", find)
+               if(find === 0){ 
                 let addClient = await ClientsData.findOne({_id : userId});
                 if(addClient === null){
                     throw new Error("No user found, please login again.")

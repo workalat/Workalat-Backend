@@ -9,6 +9,8 @@ async function changePhoneNoContoller(req, res){
         let newPhone = req.body.newPhone;
         let newCountryCode = req.body.newCountryCode;
 
+        console.log(req.body);
+
         if(userType  === "client"){
             let verify = await ClientsData.find({clientPhoneNo : newPhone});
             if(verify.length>0){

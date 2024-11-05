@@ -29,7 +29,8 @@ async function userChatDetailsController(req, res){
                     username : client.clientFullName,
                     avatar : client.clientPictureLink,
                     activeChat : client.activeChat,
-                    chatNotifications : client.chatNotifications
+                    chatNotifications : client.chatNotifications,
+                    businessName : ""
                 }});
             }
         }
@@ -39,7 +40,8 @@ async function userChatDetailsController(req, res){
                 activeChat  : 1,
                 chatNotifications : 1,
                 professionalEmail : 1,
-                professionalPictureLink : 1
+                professionalPictureLink : 1,
+                professionalCompanyName : 1
             });
             console.log(professional);
             if(professional === null){
@@ -52,7 +54,8 @@ async function userChatDetailsController(req, res){
                     username : professional.professionalFullName,
                     avatar : professional.professionalPictureLink,
                     activeChat : professional.activeChat,
-                    chatNotifications : professional.chatNotifications
+                    chatNotifications : professional.chatNotifications,
+                    businessName : professional.professionalCompanyName
                 }});
             }
          
