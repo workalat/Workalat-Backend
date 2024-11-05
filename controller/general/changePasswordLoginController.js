@@ -9,9 +9,11 @@ async function changePasswordLoginController(req, res){
 
     try{
         let clientCheck = await ClientsData.findOne({_id : userId});
+        console.log("Client Found",clientCheck)
         if(clientCheck !== null){
             let professionalCheck = await ProfessionalsData.findOne({clientId : userId});
             if(professionalCheck !== null){
+                console.log("Professinal Found",professionalCheck)
                 clientCheck.clientPassword =newPassword;
                 professionalCheck.professionalPassword = newPassword;
 
@@ -28,9 +30,11 @@ async function changePasswordLoginController(req, res){
         }
         else{
             let professionalCheck = await ProfessionalsData.findOne({_id : userId});
+            console.log("Professinal Found",professionalCheck)
             if(professionalCheck !== null){
                 let clientCheck = await ClientsData.findOne({professionalId : userId});
                 if(clientCheck !== null){
+                    console.log("Client Found",clientCheck)
                     clientCheck.clientPassword =newPassword;
                     professionalCheck.professionalPassword = newPassword;
     
