@@ -9,7 +9,6 @@ async function signinGoogleController(req, res) {
         let userPictureLink = req.body.userPictureLink;
         let userType = req.body.userType;
 
-        console.log(req.body);
 
 
         let clientsData = await ClientsData.findOne({clientEmail : email});
