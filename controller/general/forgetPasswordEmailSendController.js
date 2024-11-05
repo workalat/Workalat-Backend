@@ -9,26 +9,26 @@ async function forgetPasswordEmailSendController(req, res){
         console.log(req.body);
 
         
-        // let clientsData = await ClientsData.findOne({clientEmail : userEmail});
-        // let professionalData = await ProfessionalsData.findOne({professionalEmail : userEmail});
+        let clientsData = await ClientsData.findOne({clientEmail : userEmail});
+        let professionalData = await ProfessionalsData.findOne({professionalEmail : userEmail});
 
-        // if(clientsData !== null && professionalData === null){  //Check if it's clients account
-        //     sendOtpVerificationEmail({_id: clientsData._id, email: userEmail,verificationType: "email" , userType: "client" ,verificationFor : "forgot", type:"client"}, res);
-        // }
-        // else if(clientsData === null && professionalData !== null){  //Check if it's Professional account
-        //     sendOtpVerificationEmail({_id: professionalData._id, email: userEmail,verificationType: "email" , userType: "professional" ,verificationFor : "forgot", type:"professional"}, res);
-        // }
-        // else if(clientsData !== null && professionalData !== null){  //Check if it's Both account
-        //     if(clientsData.registerAs === "client"){
-        //         sendOtpVerificationEmail({_id: clientsData._id, email: userEmail,verificationType: "email" , userType: "client" ,verificationFor : "forgot", type:"client"}, res);
-        //     }
-        //     else{
-        //         sendOtpVerificationEmail({_id: professionalData._id, email: userEmail,verificationType: "email" , userType: "professional" ,verificationFor : "forgot", type:"professional"}, res);
-        //     }
-        // }
-        // else{
-        //     throw new Error("No Account with this email Found.");
-        // }
+        if(clientsData !== null && professionalData === null){  //Check if it's clients account
+            sendOtpVerificationEmail({_id: clientsData._id, email: userEmail,verificationType: "email" , userType: "client" ,verificationFor : "forgot", type:"client"}, res);
+        }
+        else if(clientsData === null && professionalData !== null){  //Check if it's Professional account
+            sendOtpVerificationEmail({_id: professionalData._id, email: userEmail,verificationType: "email" , userType: "professional" ,verificationFor : "forgot", type:"professional"}, res);
+        }
+        else if(clientsData !== null && professionalData !== null){  //Check if it's Both account
+            if(clientsData.registerAs === "client"){
+                sendOtpVerificationEmail({_id: clientsData._id, email: userEmail,verificationType: "email" , userType: "client" ,verificationFor : "forgot", type:"client"}, res);
+            }
+            else{
+                sendOtpVerificationEmail({_id: professionalData._id, email: userEmail,verificationType: "email" , userType: "professional" ,verificationFor : "forgot", type:"professional"}, res);
+            }
+        }
+        else{
+            throw new Error("No Account with this email Found.");
+        }
 
         // console.log(req.body);
         // if(userType === "client"){ 
