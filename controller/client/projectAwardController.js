@@ -86,11 +86,13 @@ async function projectAwardController(req, res){
             if(projectData.proposals.length>0){
                 await Promise.all(
                     projectData.proposals.map(async (val)=>{
-                        let professional = await ProfessionalsData.findOne({_id : val.professionalId}).select({professionalTotalBidPoints : 1, projectStatus : 1});
-                        console.log(professional);
-                        if(professional || professional !== null){
-                            professional.professionalTotalBidPoints += 0.5 * parseFloat(projectData.pointsNeeded);
-                            await professional.save();
+                        if(val.professionalId !== professionalId){
+                            let professional = await ProfessionalsData.findOne({_id : val.professionalId}).select({professionalTotalBidPoints : 1, projectStatus : 1});
+                            console.log(professional);
+                            if(professional || professional !== null){
+                                professional.professionalTotalBidPoints += 0.5 * parseFloat(projectData.pointsNeeded);
+                                await professional.save();
+                            }
                         }
                     })
                 );
