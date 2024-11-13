@@ -32,8 +32,7 @@ function formatOtpForReading(otp) {
 
 
 
-async function sendOtpVerificationPhone(userId ,phoneNo, res){
-    console.log(userId ,phoneNo);
+async function sendOtpVerificationPhoneWithoutId(phoneNo, res){
     try{
         let otp = Math.floor(1000 + Math.random() * 9000);
         const formattedOtp = formatOtpForReading(otp);
@@ -52,7 +51,7 @@ async function sendOtpVerificationPhone(userId ,phoneNo, res){
         // console.log(hashedOtp)
         
         let newOtpVerification = await new OtpVerificationPhoneData({
-            userId: userId,
+            phoneNo : phoneNo,
             otp: hashedOtp,
             createdAt: Date.now(),
             expiredAt : Date.now()+ 5 * 60 * 1000
@@ -65,7 +64,7 @@ async function sendOtpVerificationPhone(userId ,phoneNo, res){
             message : "You'll shortly recieve a call on Your Phone No, please verify Your OTP.",
             phoneVerified : false,
             data: {
-                userId : userId,
+                verificationId : newOtpVerification._id,
                 phone : phoneNo
             }
         })
@@ -81,4 +80,4 @@ async function sendOtpVerificationPhone(userId ,phoneNo, res){
     }
 } 
 
-module.exports = sendOtpVerificationPhone;
+module.exports = sendOtpVerificationPhoneWithoutId;

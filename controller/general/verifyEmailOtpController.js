@@ -11,7 +11,7 @@ async function verifyEmailOtpController(req, res) {
         let type = req.body.type || "auth";
         console.log(req.body); 
         if (!userId || !otp) {
-            throw Error("Empty otp details are not allowed");
+            throw Error("Invalid Details.");
         } 
         else {
             let UserOtpVerificationRecodrs;
@@ -23,7 +23,7 @@ async function verifyEmailOtpController(req, res) {
                 UserOtpVerificationRecodrs = await OtpVerificationData.find({ userId }).sort({ createdAt: -1 });
             }
             if (UserOtpVerificationRecodrs.length <= 0) {
-                throw new Error("Please login again or Resend OTP.")
+                throw new Error("Please Resend OTP.")
             }
             else {
                 let { expiredAt } = UserOtpVerificationRecodrs[0];
@@ -31,7 +31,7 @@ async function verifyEmailOtpController(req, res) {
 
                 if (expiredAt < Date.now()) {
                     await OtpVerificationData.deleteMany({ userId });
-                    throw new Error("OTP has expired, please request new OTP.")
+                    throw new Error("OTP expired, Please request a new OTP.")
                 }
                 else {
                     // console.log("Comparing");
@@ -40,7 +40,7 @@ async function verifyEmailOtpController(req, res) {
                     console.log(validOtp)
 
                     if (!validOtp) {
-                        throw new Error("Invalide OTP, Please enter correct OTP.");
+                        throw new Error("Invalide OTP");
                     }
                     else {
                         let data;
@@ -50,11 +50,11 @@ async function verifyEmailOtpController(req, res) {
                             if(type === "auth"){
                                 let token = await data.generateAuthToken();
                                 await OtpVerificationData.deleteMany({ userId });
-                                res.status(200).json({ status: "success", userStatus: "VERIFIED", emailVerify: data.isClientEmailVerify, message: "User Email verified successfully", token: token });
+                                res.status(200).json({ status: "success", userStatus: "VERIFIED", emailVerify: data.isClientEmailVerify, message: "Email verified.", token: token });
                             }
                             else{
                                 await OtpVerificationData.deleteMany({ userId });
-                                res.status(200).json({ status: "success", userStatus: "VERIFIED", emailVerify: data.isClientEmailVerify, message: "User Email verified successfully"});
+                                res.status(200).json({ status: "success", userStatus: "VERIFIED", emailVerify: data.isClientEmailVerify, message: "Email verified."});
                             }
                         }
                         else {
@@ -64,11 +64,11 @@ async function verifyEmailOtpController(req, res) {
                             if(type === "auth"){
                                  let token = await data.generateAuthToken();
                                 await OtpVerificationData.deleteMany({ userId });
-                                 res.status(200).json({ status: "success", userStatus: "VERIFIED", emailVerify:  data.isClientEmailVerify, message: "User Email verified successfully",token: token  });
+                                 res.status(200).json({ status: "success", userStatus: "VERIFIED", emailVerify:  data.isClientEmailVerify, message: "Email verified.",token: token  });
                             }
                             else{
                                 await OtpVerificationData.deleteMany({ userId });
-                                 res.status(200).json({ status: "success", userStatus: "VERIFIED", emailVerify:  data.isClientEmailVerify, message: "User Email verified successfully" });
+                                 res.status(200).json({ status: "success", userStatus: "VERIFIED", emailVerify:  data.isClientEmailVerify, message: "Email verified." });
 
                             }
                         }

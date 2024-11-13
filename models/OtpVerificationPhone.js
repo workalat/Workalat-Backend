@@ -20,6 +20,9 @@ let OtpVerificationPhoneSchema  = new mongoose.Schema({
         },
         expiredAt : {
             type : Date
+        },
+        phoneNo : {
+            type : String
         }
 
 })

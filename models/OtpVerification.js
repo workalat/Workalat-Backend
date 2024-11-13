@@ -20,6 +20,9 @@ let OtpVerificationSchema  = new mongoose.Schema({
         },
         expiredAt : {
             type : Date
+        },
+        email : {
+            type : String
         }
 
 })

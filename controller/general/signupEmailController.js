@@ -4,11 +4,15 @@ let sendOtpVerificationEmail = require("../../middleware/sendOTPVerificationEmai
 
 async function signupEmailController(req, res){
     try{        
-        let clientId = req.body.clientId;
         let email = req.body.email;
         let name = req.body.name;
-        let pass = req.body.pass;
+        let phone  = req.body.phone;
+        let country = req.body.country;
+        let countryCode = req.body.countryCode;
+        let isPhoneVerify = req.body.isPhoneVerify;
+        let isEmailVerify = req.body.isEmailVerify;
         let confirmPass = req.body.confirmPass;
+        let pass = req.body.pass;
         let userType = req.body.userType; 
         let professionalService = req.body.professionalService;
          console.log(req.body);
@@ -24,34 +28,56 @@ async function signupEmailController(req, res){
                 throw new Error("Password and Confirm Password are not same");
             }
             else{
-                let data = await ClientsData.findOne({_id : clientId});
-                console.log(data);
-                data.clientEmail = email;
-                data.clientPassword = pass;
-                data.clientFullName = name;
-                data.registerAs = "client";
-                await data.save();
-                console.log(data);
+                let dates ={
+                    passwordLast: Date.now(),
+                    twoFactAuthLast : Date.now(),
+                    kycLast: Date.now(),
+                    phoneLast: Date.now()
+ 
+                }
+                let data = await ClientsData.create({
+                    clientEmail : email,
+                    clientFullName : name,
+                    clientPassword  : pass,
+                    registerAs : "client",
+                    clientPhoneNo : phone,
+                    isClientEmailVerify : isEmailVerify,
+                    isClientPhoneNoVerify : isPhoneVerify,
+                    clientCountry : country,
+                    clientCountryCode : countryCode, 
+                    clientRegisterationType : "phone",
+                    ChangingDates: dates
+                });
+                let token = await data.generateAuthToken();
                 if(data.isClientEmailVerify === true || data.isClientEmailVerify){
                     //If email is already verified then sneding all the required data
+
                     res.cookie("token", token, {
-                    sameSite: "none",
-                    secure: true,
-                    }).status(200).json({status: "success", message : "Email and password has been saved successfully",id: data._id ,data: [{
-                        userId : data._id,
-                        isClientPhoneNoVerify : data.isClientPhoneNoVerify,
-                        isClientEmailVerify : data.isClientEmailVerify,
-                        clientDashAccess : data.clientDashAccess,
-                        clientPostingAccess : data.clientPostingAccess,
-                        adminAccessClient: data.adminAccessClient
-                    }]})
+                        sameSite: "none",
+                        secure: true,
+                        }).status(200).json({status: "success", message : "Account Created Successfully.",id: data._id ,data: [{
+                            userType : "client",
+                            token : token
+                        }]})
+
+                    // res.cookie("token", token, {
+                    // sameSite: "none",
+                    // secure: true,
+                    // }).status(200).json({status: "success", message : "Email and password has been saved successfully",id: data._id ,data: [{
+                    //     userId : data._id,
+                    //     isClientPhoneNoVerify : data.isClientPhoneNoVerify,
+                    //     isClientEmailVerify : data.isClientEmailVerify,
+                    //     clientDashAccess : data.clientDashAccess,
+                    //     clientPostingAccess : data.clientPostingAccess,
+                    //     adminAccessClient: data.adminAccessClient
+                    // }]})
                 }
-                else{
+                else{ 
                     //Email verification process
                     // console.log("Before verification :" ,data._id, data.clientEmail)
                     sendOtpVerificationEmail({_id: data._id, email: data.clientEmail, userType : "client" ,verificationType: "email" ,verificationFor : "signup verification", type:"client"}, res);
                     
-                }
+                } 
             }
         }
         }
@@ -63,7 +89,6 @@ async function signupEmailController(req, res){
         else{
             if(pass !==confirmPass){
                 throw new Error("Password and Confirm Password are not same");
-                res.status(400).json({status : "fail", message : "Password and Confirm Password are not same"});
             }
             else{ //signup user with email
                 console.log("professionalService");

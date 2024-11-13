@@ -7,7 +7,7 @@ async function findSingleTicketController(req, res){
         let ticketId = req.body.ticketId;
 
         let data = await TicketsData.findOne({_id : ticketId})
-
+        console.log(data);
         if(data !== null){
             res.status(200).json({status : "succss", userStatus : "SUCCESS", data: data});
         }

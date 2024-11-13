@@ -1,22 +1,21 @@
 
 let ClientsData = require("../../models/Client");
-let sendOtpVerificationPhoneWithoutId = require("../../middleware/sendOtpVerificationPhoneWithoutId");
+let sendOTPVerificationEmailWithoutId = require("../../middleware/sendOTPVerificationEmailWithoutId");
 
 
-async function signupPhoneController(req, res){
+async function signupClientEmailSendController(req, res){
     try{        
-        let phoneNo = req.body.phoneNo;
-        let country = req.body.country; 
-        let countryCode = req.body.countryCode;
+        let email = req.body.email;
+        // let country = req.body.country; 
+        // let countryCode = req.body.countryCode;
 
-        if((phoneNo ===null || phoneNo === undefined) || (country ===null || country === undefined) || (countryCode ===null || countryCode === undefined)){
+        if((email ===null || email === undefined)){
             throw new Error("Please enter valide details.")
-        }
+        } 
         else{
-            let data = await ClientsData.find({clientPhoneNo : phoneNo}); //If the phone no is already present we will not create the account.
-            console.log(data);
+            let data = await ClientsData.find({clientEmail : email}); //If the phone no is already present we will not create the account.
             if(data.length>0){
-                throw new Error("This Phone Number is already registered, please use another Phone Number");
+                throw new Error("This Email is already registered, please use another Email.");
             }
             else{
                 // let dates ={
@@ -36,12 +35,10 @@ async function signupPhoneController(req, res){
                 //         clientPostingAccess : data.clientPostingAccess,
                 //         adminAccessClient: data.adminAccessClient,
                 //     }]})
-                // }
+                // } 
                 // else{
                     //Phone no verification process
-                    let phone = phoneNo;
-                    console.log(phone);
-                    sendOtpVerificationPhoneWithoutId(phone, res)
+                    sendOTPVerificationEmailWithoutId({ email: email, userType : "client" ,verificationType: "email" ,verificationFor : "signup verification", type:"client"}, res);
                     // res.status(200).json({status : "success", message : "Account has been created successfully", data : [{
                     //     userId : data._id,
                     //     isClientPhoneNoVerify : data.isClientPhoneNoVerify,
@@ -53,10 +50,10 @@ async function signupPhoneController(req, res){
        
     }
     catch(e){
-        console.log("Error while creating account using phone number during project posting", e);
-        res.status(400).json({status : "fail", message : e.message});
+        console.log("Error while creating account using sending email otp to client without ID.", e);
+        res.status(400).json({status : "fail", userStatus : "FAILED" ,message : e.message});
     }
 }
 
 
-module.exports = signupPhoneController;
+module.exports = signupClientEmailSendController;

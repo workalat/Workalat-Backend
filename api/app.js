@@ -103,6 +103,10 @@ const getPointsBudgetWalletRoute = require("../Routes/general/getPointsBudgetWal
 const logoutRoute = require("../Routes/general/logoutRoute");
 const projectHistoryRoute = require("../Routes/general/projectHistoryRoute");
 const userChatDetailsRoute = require("../Routes/general/userChatDetailsRoute");
+const verifyPhoneOtpControllerWithoutIdRoute = require("../Routes/general/verifyPhoneOtpControllerWithoutIdRoute");
+const verifyEmailOtpWithoutIdRoute = require("../Routes/general/verifyEmailOtpWithoutIdRoute");
+const sendEmailOtpWidRoute = require("../Routes/general/sendEmailOtpWidRoute");
+const sendPhoneOtpWidRoute = require("../Routes/general/sendPhoneOtpWidRoute");
 
 
 
@@ -140,6 +144,7 @@ let switchIntoProfessionalRoute =  require("../Routes/client/switchIntoProfessio
 let clientDetailsRoute =  require("../Routes/client/clientDetailsRoute");
 let markAsAwardedRoute =  require("../Routes/client/markAsAwardedRoute");
 let cancelProjectRoute =  require("../Routes/client/cancelProjectRoute");
+let signupClientEmailSendRoute =  require("../Routes/client/signupClientEmailSendRoute");
 
 
 //Professional Routes
@@ -179,7 +184,7 @@ let enablePayAsYouGoRoute = require("../Routes/professional/enablePayAsYouGoRout
 let showSingleProjectLeadRoute = require("../Routes/professional/showSingleProjectLeadRoute");
 
 
-//Admin Routes
+//Admin Routes / Milestone 3
 let addCategoryRoute = require("../Routes/admin/addCategoryRoute");
 let addServiceRoute = require("../Routes/admin/addServiceRoute");
 let addQuestionsRoute = require("../Routes/admin/addQuestionsRoute");
@@ -188,6 +193,14 @@ let certificationApprovalRoute = require("../Routes/admin/certificationApprovalR
 let kycApprovalRoute = require("../Routes/admin/kycApprovalRoute");
 let addAdminRoute = require("../Routes/admin/addAdminRoute");
 const addPointsBudgetController = require("../controller/admin/addPointsBudgetController");
+const allTicketsDataRoute = require("../Routes/admin/allTicketsDataRoute");
+const showAllLeadsRoute = require("../Routes/admin/showAllLeadsRoute");
+const showSingleLeadsBidRoute = require("../Routes/admin/showSingleLeadsBidRoute");
+const leadsStatusChangeRoute = require("../Routes/admin/leadsStatusChangeRoute");
+const showallKycDataRoute = require("../Routes/admin/showallKycDataRoute");
+const showSingleKycDataRoute = require("../Routes/admin/showSingleKycDataRoute");
+const showallCertificateDataRoute = require("../Routes/admin/showallCertificateDataRoute");
+const showSingleCertificationDataRoute = require("../Routes/admin/showSingleCertificationDataRoute");
 
 
 /////////////////////////////////////////////////////// API Stuffs /////////////////////////////////////////////////////////////////////////////////////
@@ -380,7 +393,20 @@ app.use("/projectHistory", projectHistoryRoute);
 app.use("/userChatDetails", userChatDetailsRoute);
 
 
+//WHEN Someone wants to verify the PHONE OTP without USER ID
+app.use("/verifyPhoneOtpWoId", verifyPhoneOtpControllerWithoutIdRoute);
 
+
+//WHEN Someone wants to verify the EMAIL OTP without USER ID
+app.use("/verifyEmailOtpWoId", verifyEmailOtpWithoutIdRoute);
+
+
+//WHEN Someone wants to verify the EMAIL OTP without USER ID
+app.use("/resendEmailOtpWId", sendEmailOtpWidRoute);
+
+
+//WHEN Someone wants to verify the EMAIL OTP without USER ID
+app.use("/resendPhoneOtpWId", sendPhoneOtpWidRoute);
 
 
 ////////////////////////////////  CLIENT APIS ////////////////////////////////////////////
@@ -467,6 +493,10 @@ app.use("/cancelProject", cancelProjectRoute);
 
 //WHEN CLIETNS/PROFESSIONALS WANTS TO SEE THEIR PHONE NO
 app.use("/getUserPhone", getUserPhoneNoRoute);
+
+
+//WHEN CLIETNS WANTS TO SIGNUP USING EMAIL AND SEND OTP
+app.use("/clientSendEmailOtp", signupClientEmailSendRoute);
 
 
 
@@ -592,7 +622,7 @@ app.use("/changePayAsYouGo", enablePayAsYouGoRoute);
 app.use("/showSingleProjectLead", showSingleProjectLeadRoute);
 
 
-////////////////////////////////  ADMIN APIS ////////////////////////////////////////////
+////////////////////////////////  ADMIN APIS /  MILESTONE 3 ////////////////////////////////////////////
 //Add Category
 app.use("/addCategory", addCategoryRoute);
 
@@ -614,11 +644,43 @@ app.use("/certificationApproval", certificationApprovalRoute);
 //KYC APPROVAL
 app.use("/kycApproval", kycApprovalRoute);
 
-//KYC APPROVAL
+//ADD ADMINGS
 app.use("/addAdmins", addAdminRoute);
 
-//KYC APPROVAL
+//ADD POINTS RULE
 app.use("/addPointsRule", addPointsBudgetController);
+
+
+//KYC APPROVAL
+app.use("/allTicketsData", allTicketsDataRoute);
+
+
+//Show All Leads
+app.use("/showAllLeads", showAllLeadsRoute);
+
+
+//Show single Leads Bids
+app.use("/showsingleProjectBids", showSingleLeadsBidRoute);
+
+
+//Change status of leads
+app.use("/changeLeadsStatus", leadsStatusChangeRoute);
+
+
+
+//Show all Kyc Data 
+app.use("/showAllKyc", showallKycDataRoute);
+
+
+//Show Single Kyc Data 
+app.use("/showSingleKyc", showSingleKycDataRoute);
+
+//Show All Certification Data
+app.use("/showallCertificate", showallCertificateDataRoute);
+
+
+//Show All Certification Data
+app.use("/showSingleCertificate", showSingleCertificationDataRoute);
 
 
 

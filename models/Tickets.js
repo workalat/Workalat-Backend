@@ -31,6 +31,10 @@ let TicketsSchema  = new mongoose.Schema({
         type : String,
         default : ""
     },
+    ticketCreatorPicture : {
+        type : String,
+        default : "https://www.w3schools.com/howto/img_avatar.png"
+    },
     ticketNumber : {
         type : String,
         default : ""

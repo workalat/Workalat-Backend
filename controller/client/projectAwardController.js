@@ -98,7 +98,6 @@ async function projectAwardController(req, res){
                 );
             }
     
-    
             projectData.confirmedPrice = projectConfirmAmount;
             projectData.paidPrice = 0;
             projectData.awardedId = award._id;

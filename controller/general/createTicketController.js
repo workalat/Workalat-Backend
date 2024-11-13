@@ -28,6 +28,7 @@ async function createTicketController(req, res){
 
         let message_name;
         let message_email;
+        let ticketCreatorPicture;
 
        if(ticketCreatedBy === "client"){
             let data = await ClientsData.findOne({_id : ticketCreatorId});
@@ -35,14 +36,16 @@ async function createTicketController(req, res){
                 throw new Error("No User Data Found, please login again");
             }
             message_name = data.clientFullName;
+            ticketCreatorPicture = data.clientPictureLink;
             message_email = "";
        }
        else if(ticketCreatedBy === "professional"){
             let data = await ProfessionalsData.findOne({_id : ticketCreatorId});
             if(data === null){
                 throw new Error("No User Data Found, please login again");
-            }
+            } 
             message_name = data.professionalFullName;
+            ticketCreatorPicture = data.professionalPictureLink;
             message_email = "";
        }
        else{
@@ -71,7 +74,8 @@ async function createTicketController(req, res){
             ticketProjectId : ticketProjectId,
             ticketCreatedBy : ticketCreatedBy,
             ticketCreatorId  : ticketCreatorId,
-                ticketNumber : ticketNumber,
+            ticketCreatorPicture : ticketCreatorPicture,
+            ticketNumber : ticketNumber,
             ticketCreatorName : ticketCreatorName,
             ticketStatus : status,
             ticketMessages : message

@@ -10,7 +10,7 @@ let transporter = nodemailer.createTransport({
         user : process.env.USER,
         pass : process.env.PASS
     } 
-});
+}); 
 transporter.verify((e, success)=>{
     if(e){
         console.log("Nodemailer Error : "  ,e)
@@ -18,10 +18,10 @@ transporter.verify((e, success)=>{
     else{
         console.log("Nodemailer is all set to send the emails");
     }
-});
+}); 
 
 //Nodemailer Email OTP Sending Function
-async function sendOtpVerificationEmail({_id, email, userType,verificationType, verificationFor, accountCreation}, res){
+async function sendOtpVerificationEmail({email, userType,verificationType, verificationFor, accountCreation}, res){
     try{
         console.log("Called otp function");
         console.log(process.env.USER);
@@ -40,7 +40,7 @@ async function sendOtpVerificationEmail({_id, email, userType,verificationType, 
         let hashedOtp = await bcrypt.hash(otp, 10);
         console.log(hashedOtp)
         let newOtpVerification = await new OtpVerificationData({
-            userId: _id,
+            email: email,
             otp: hashedOtp,
             verificationType : verificationType,
             verificationFor : verificationFor,
@@ -57,7 +57,7 @@ async function sendOtpVerificationEmail({_id, email, userType,verificationType, 
             message : "OTP Sent on your Email.",
             emailVerified : false,
             data: [{
-                userId : _id,
+                verificationId : newOtpVerification._id,
                 userType: userType,
                 email
             }]
@@ -66,23 +66,11 @@ async function sendOtpVerificationEmail({_id, email, userType,verificationType, 
     catch(e){
         console.log("Error while sending Email for OTP verification", e);
 
-        if(accountCreation === true || accountCreation){
-            if(userType === "client"){
-                let deleteUser  = await ClientsData.deleteOne({_id : _id});
-                e.message = "The server is busy, Please Try Again in a few minutes";
-            }
-            else{
-                let deleteUser  = await ProfessionalsData.deleteOne({_id : _id});
-                e.message = "The server is busy, Please Try Again in a few minutes";
-            }
-        }
-
         res.status(400).json({
             status : "FAILED",
             message : e.message,
             errorKey : e.key,
             data : [{
-                userId : _id,
                 userType: userType,
                 email : email
             }]

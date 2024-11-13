@@ -313,7 +313,7 @@ let ProfessionalDataSchema  = new mongoose.Schema({
     paymentHistory : {
         type : Array,
         default : []
-    },
+    }, 
     isPaymentVerify : {
         type : Boolean,
         default : false

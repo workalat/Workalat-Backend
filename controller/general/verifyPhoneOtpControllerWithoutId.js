@@ -4,13 +4,12 @@ let ProfessionalsData = require("../../models/Professional");
 
 let bcrypt = require("bcryptjs");
 
-async function verifyPhoneOtpController(req, res){
+async function verifyPhoneOtpControllerWithoutId(req, res){
     try{
-        let userId = req.body.userId;
+        let verificationId = req.body.verificationId;
         let otp = req.body.otp;
         let userType = req.body.userType;
-        console.log(req.body);
-        if(!userId || !otp){
+        if(!verificationId || !otp){
             throw Error("Invalid Details.");
         }
         else{
@@ -19,11 +18,12 @@ async function verifyPhoneOtpController(req, res){
             
             if(userType === "client"){
                 // console.log("Reched 3");
-                 UserOtpVerificationRecodrs = await OtpVerificationPhoneData.find({userId}).sort({createdAt : -1});
+                 UserOtpVerificationRecodrs = await OtpVerificationPhoneData.find({_id : verificationId}).sort({createdAt : -1});
+                 console.log("CLIENT OTP RECORD", UserOtpVerificationRecodrs);
             }
             else{
                 // console.log("Reched 2");
-                UserOtpVerificationRecodrs = await OtpVerificationPhoneData.find({userId}).sort({createdAt : -1});
+                UserOtpVerificationRecodrs = await OtpVerificationPhoneData.find({_id : verificationId}).sort({createdAt : -1});
             }
             // console.log(UserOtpVerificationRecodrs)
             if(UserOtpVerificationRecodrs.length <=0){
@@ -34,7 +34,7 @@ async function verifyPhoneOtpController(req, res){
                 let hashedOtp = UserOtpVerificationRecodrs[0].otp;
  
                 if(expiredAt < Date.now()){
-                    await OtpVerificationPhoneData.deleteMany({userId});
+                    await OtpVerificationPhoneData.deleteOne({_id : verificationId});
                     throw new Error("OTP expired, please request a new OTP.")
                 }
                 else{
@@ -44,26 +44,26 @@ async function verifyPhoneOtpController(req, res){
                     // console.log(validOtp)
  
                     if(!validOtp){
-                        throw new Error("Invalid OTP.");
+                        throw new Error("Invalid OTP");
                     }
                     else{
                         let data;
                         console.log("reached");
                         if(userType === "client"){
-                            data = await ClientsData.findOneAndUpdate({_id: userId}, {isClientPhoneNoVerify : true},   { new: true });
-                            let token = await data.generateAuthToken();
+                            // data = await ClientsData.findOneAndUpdate({_id: userId}, {isClientPhoneNoVerify : true},   { new: true });
+                            // let token = await data.generateAuthToken();
                             
-                            await OtpVerificationPhoneData.deleteMany({userId});
+                            await OtpVerificationPhoneData.deleteOne({_id : verificationId});
                             //Yha pr ham token generate karenge or usko database mai save karenge
-                            res.status(200).json({status : "success", userStatus : "VERIFIED" ,phoneVerify : data.isClientPhoneNoVerify ,message : "Phone verified.",userId : data._id , userType : "client" ,token: token});
+                            res.status(200).json({status : "success", userStatus : "VERIFIED" ,phoneVerify : true,message : "Phone Verified", userType : "client"});
                         }
                         else{
-                            data = await ProfessionalsData.findOneAndUpdate({_id: userId}, {isprofessionalPhoneNoVerify : true},   { new: true });
-                            let token = await data.generateAuthToken();
+                            // data = await ProfessionalsData.findOneAndUpdate({_id: userId}, {isprofessionalPhoneNoVerify : true},   { new: true });
+                            // let token = await data.generateAuthToken();
                             
-                            await OtpVerificationPhoneData.deleteMany({userId});
+                            await OtpVerificationPhoneData.deleteOne({_id : verificationId});
                             //Yha pr ham token generate karenge or usko database mai save karenge
-                            res.status(200).json({status : "success", userStatus : "VERIFIED" ,phoneVerify : data.isprofessionalPhoneNoVerify ,message : "Phone verified.",userId : data._id , userType : "professional",token: token});
+                            res.status(200).json({status : "success", userStatus : "VERIFIED" ,phoneVerify : true,message : "Phone Verified", userType : "professional"});
                         }
                     }
                 }
@@ -77,4 +77,4 @@ async function verifyPhoneOtpController(req, res){
 }
 
 
-module.exports = verifyPhoneOtpController;
+module.exports = verifyPhoneOtpControllerWithoutId;
