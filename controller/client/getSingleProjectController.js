@@ -24,6 +24,7 @@ async function getSingleProjectController(req, res){
                     projectQuestions : 1,
                     serviceTitle : 1,
                     awardedStatus : 1,
+                    projectPriceTitle : 1
                 });
             }
             else{
@@ -39,9 +40,9 @@ async function getSingleProjectController(req, res){
                     projectQuestions : 1,
                     serviceTitle : 1,
                     awardedStatus : 1,
-
+                    projectPriceTitle : 1
                 });
-            }
+            } 
             if(projectsData === null){
                 throw new Error("No data Found")
             }
@@ -64,6 +65,7 @@ async function getSingleProjectController(req, res){
                         awardedProfessionalId : projectsData.awardedProfessionalId,
                         projectQuestions : projectsData.projectQuestions,
                         projectPrice : projectsData.confirmedPrice,
+                        projectPriceTitle : projectsData.projectPriceTitle,
                         _id : projectsData._id,
                         serviceTitle : projectsData.serviceTitle,
                         professionalDetails : [professionalDetails]
@@ -86,6 +88,7 @@ async function getSingleProjectController(req, res){
                         awardedProfessionalId : projectsData.awardedProfessionalId,
                         projectQuestions : projectsData.projectQuestions,
                         projectPrice : projectsData.confirmedPrice,
+                        projectPriceTitle : projectsData.projectPriceTitle,
                         _id : projectsData._id,
                         serviceTitle : projectsData.serviceTitle,
                         projectStatusProfessional : projectsData.projectStatusProfessional,
@@ -103,6 +106,7 @@ async function getSingleProjectController(req, res){
                         awardedProfessionalId : projectsData.awardedProfessionalId,
                         projectQuestions : projectsData.projectQuestions,
                         projectPrice : projectsData.confirmedPrice,
+                        projectPriceTitle : projectsData.projectPriceTitle,
                         _id : projectsData._id,
                         serviceTitle : projectsData.serviceTitle
                     }

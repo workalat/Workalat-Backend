@@ -133,7 +133,7 @@ let ProjectSchema  = new mongoose.Schema({
     },
     projectPriceString: {
         type : String,
-        default : ""
+        default : "" 
     },
     projectPriceTitle: { //Small project ($150 or less)
         type : String,

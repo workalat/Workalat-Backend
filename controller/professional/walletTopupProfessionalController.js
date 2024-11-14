@@ -6,7 +6,7 @@ async function walletTopupProfessionalController(req, res){
     let professionalId = req.body.professionalId;
     try{
         let product = await stripe.products.create({
-            name : `Wallet Topup  | £${amount} (+£${amount* 0.2})VAT`
+            name : `Wallet Topup  | £${amount} (+£${(amount* 0.2).toFixed(1)})VAT`
         });
         if(product){
             let price = await stripe.prices.create({
@@ -18,7 +18,7 @@ async function walletTopupProfessionalController(req, res){
                 let professionalData= await ProfessionalsData.findOne({_id : professionalId}).select({
                     professionalFullName : 1,
                     professionalEmail : 1,
-                    professionalPhoneNo : 1,
+                    professionalPhoneNo : 1, 
                     professionalCountryCode : 1
                 });
                 console.log(professionalData);

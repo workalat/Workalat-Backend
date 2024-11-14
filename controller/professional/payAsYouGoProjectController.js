@@ -33,7 +33,7 @@ async function payAsYouGoProjectController(req, res){
                     let price = await stripe.prices.create({
                         product : `${product.id}`,
                         unit_amount : amount*100,
-                        currency : "gbp"
+                        currency : "gbp" 
                     });
                     if(price.id){
                         let session = await stripe.checkout.sessions.create({

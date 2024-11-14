@@ -16,7 +16,8 @@ async function projectHistoryController(req, res){
                 serviceLocationTown : 1,
                 awardedStatus : 1,
                 projectStatusAdmin : 1,
-                confirmedPrice : 1,
+                confirmedPrice : 1, 
+                projectPriceTitle : 1
             });
     
             console.log(projectsData)

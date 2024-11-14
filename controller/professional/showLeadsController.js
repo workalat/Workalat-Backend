@@ -244,7 +244,7 @@ async function showLeadsController(req, res) {
         console.log("Final", finalData.length);
             
             if(choice === "leads"){
-                res.status(200).json({ status: "success", userStatus: "SUCCESS", message: "Data Found Successfully", data: finalData });
+                res.status(200).json({ status: "success", userStatus: "SUCCESS", message: "Data Found Successfully", data: finalData , userSkills : data.professionalSkills, userPrimarySkill : data.professionalPrimaryService});
             }
             else if(choice === "dashboard"){
                 res.status(200).json({ status: "success", userStatus: "SUCCESS", message: "Data Found Successfully", data: finalData.length });
