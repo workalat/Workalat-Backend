@@ -13,8 +13,10 @@ async function showallKycDataController(req, res){
              kycStatus : { $ne: "notApplied" }
             }).select({
              kycStatus : 1,
-             clientFullName : 1,
              'kyc.timeStamp' : 1,
+             'kyc.firstName' : 1,
+             'kyc.lastName' : 1,
+             'kyc._id' : 1,
             });
              res.status(200).json({ status: "success", userStatus: "SUCCESS", data: clientData });
         }
@@ -23,8 +25,10 @@ async function showallKycDataController(req, res){
                 kycStatus : { $ne: "notApplied" }
                }).select({
                 kycStatus : 1,
-                professionalFullName : 1,
                 'kyc.timeStamp' : 1,
+                'kyc.firstName' : 1,
+                'kyc.lastName' : 1,
+                'kyc._id' : 1,
                });
                 res.status(200).json({ status: "success", userStatus: "SUCCESS", data: professionalData });
         }

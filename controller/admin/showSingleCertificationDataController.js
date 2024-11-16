@@ -8,6 +8,7 @@ async function showSingleCertificationDataController(req, res){
     try{
 
         let certificationId = req.body.certificationId;
+        console.log(req.body);
 
         let data = await ProfessionalsData.findOne(
             { "certifications._id": certificationId },

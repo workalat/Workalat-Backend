@@ -187,6 +187,7 @@ let showSingleProjectLeadRoute = require("../Routes/professional/showSingleProje
 //Admin Routes / Milestone 3
 let addCategoryRoute = require("../Routes/admin/addCategoryRoute");
 let addServiceRoute = require("../Routes/admin/addServiceRoute");
+let showAllServiceDataRoute = require("../Routes/admin/showAllServiceDataRoute");
 let addQuestionsRoute = require("../Routes/admin/addQuestionsRoute");
 let addJobQuestionRoute = require("../Routes/admin/addJobQuestionRoute");
 let certificationApprovalRoute = require("../Routes/admin/certificationApprovalRoute");
@@ -195,12 +196,17 @@ let addAdminRoute = require("../Routes/admin/addAdminRoute");
 const addPointsBudgetController = require("../controller/admin/addPointsBudgetController");
 const allTicketsDataRoute = require("../Routes/admin/allTicketsDataRoute");
 const showAllLeadsRoute = require("../Routes/admin/showAllLeadsRoute");
+const showSingleProjectAdminLeadsRoute = require("../Routes/admin/showSingleProjectAdminLeadsRoute");
 const showSingleLeadsBidRoute = require("../Routes/admin/showSingleLeadsBidRoute");
 const leadsStatusChangeRoute = require("../Routes/admin/leadsStatusChangeRoute");
 const showallKycDataRoute = require("../Routes/admin/showallKycDataRoute");
 const showSingleKycDataRoute = require("../Routes/admin/showSingleKycDataRoute");
 const showallCertificateDataRoute = require("../Routes/admin/showallCertificateDataRoute");
 const showSingleCertificationDataRoute = require("../Routes/admin/showSingleCertificationDataRoute");
+const showAllQuestionsRoute = require("../Routes/admin/showAllQuestionsRoute");
+const showAllAssignedQuestionRoute = require("../Routes/admin/showAllAssignedQuestionRoute");
+const adminDashboardDataRoute = require("../Routes/admin/dashboardDataRoute");
+const allUserRoute = require("../Routes/admin/allUserRoute");
 
 
 /////////////////////////////////////////////////////// API Stuffs /////////////////////////////////////////////////////////////////////////////////////
@@ -618,7 +624,7 @@ app.use("/walletTransactionData", walletTransactionHistoryRoute);
 app.use("/changePayAsYouGo", enablePayAsYouGoRoute);
 
 
-//WHEN PROFESSIONAL REQUEST TO CANCEL THE MEMBERSHIP
+//SHOW SINGLE LEADS DATA
 app.use("/showSingleProjectLead", showSingleProjectLeadRoute);
 
 
@@ -628,6 +634,10 @@ app.use("/addCategory", addCategoryRoute);
 
 //ADD SERVICES
 app.use("/addService", addServiceRoute);
+
+//ADD SERVICES
+app.use("/allServiceAdmin", showAllServiceDataRoute);
+
 
 //ADD JOBS'S QUESTIONS
 app.use("/addQuestions", addQuestionsRoute);
@@ -659,6 +669,9 @@ app.use("/allTicketsData", allTicketsDataRoute);
 app.use("/showAllLeads", showAllLeadsRoute);
 
 
+//Show Single Leads
+app.use("/showSingleLeadsAdmin", showSingleProjectAdminLeadsRoute);
+
 //Show single Leads Bids
 app.use("/showsingleProjectBids", showSingleLeadsBidRoute);
 
@@ -682,6 +695,20 @@ app.use("/showallCertificate", showallCertificateDataRoute);
 //Show All Certification Data
 app.use("/showSingleCertificate", showSingleCertificationDataRoute);
 
+//Show All Certification Data
+app.use("/showAllQuestions", showAllQuestionsRoute);
+
+
+//Show All Certification Data
+app.use("/showAllAssignedQuestions", showAllAssignedQuestionRoute);
+
+
+//Show All Dashboard Data
+app.use("/dashboard", adminDashboardDataRoute);
+
+
+//Show All Dashboard Data
+app.use("/allUserAdmin", allUserRoute);
 
 
 //////////////////////////// LISTNEING PORT /////////////////////////////////////////

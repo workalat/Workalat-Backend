@@ -45,7 +45,6 @@ let ClientsDataSchema  = new mongoose.Schema({
     default : false
    },
 
-
    clientEmail : {
     type : String,
     default : ""
@@ -231,7 +230,7 @@ let ClientsDataSchema  = new mongoose.Schema({
         giverReview : {type: String},
         revieTimeStamp : ({type: Date, default : Date.now()})
     }],
-    
+     
     accountCreationDate : {
         type : Date,
         default : Date.now()
@@ -255,8 +254,8 @@ let ClientsDataSchema  = new mongoose.Schema({
         firstName : {type : String,lowercase : true},
         lastName : {type : String, lowercase : true},
         email : {type : String, lowercase : true},
-        phoneNo : {type : Number, },
-        postcode : {type : String,},
+        phoneNo : {type : String,default : "" },
+        postcode : {type : String, default : ""}, 
         address : {type : String, lowercase : true},
         documentType : {type : String, lowercase : true, default : ""},
         idNumber : {type : String,  default : ""},

@@ -40,7 +40,7 @@ async function addCategoryController(req, res){
         data[0].services.push(s);
         await data[0].save();
 
-        res.status(200).json({status: "success", userStatus : "SUCCESS" , });
+        res.status(200).json({status: "success", userStatus : "SUCCESS" , message : `${category.toUpperCase()} added Successfully.`});
     }
     catch(e){
         console.log("Error while adding categories project", e);

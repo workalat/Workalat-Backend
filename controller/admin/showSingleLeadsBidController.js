@@ -7,8 +7,8 @@ async function showSingleLeadsBidController(req, res){
         let {projectId} = req.body;
         let data = await ProjectsData.find({_id : projectId}).select({
             clientName : 1,
-            serviceNeeded : 1,
             serviceLocationTown : 1,
+            serviceTitle : 1,
             proposals : 1,
             clientId  :1,
             clientPictureLink : 1
@@ -26,11 +26,11 @@ async function showSingleLeadsBidController(req, res){
             if(clientData !== null){
                 projectWithoutProposals.clientName = clientData.clientFullName;
                 projectWithoutProposals.clientPictureLink = clientData.clientPictureLink;
+                projectWithoutProposals.verifyEmail = clientData?.isClientEmailVerify;
+                projectWithoutProposals.verifyPhone =  clientData?.isClientPhoneNoVerify;
+                projectWithoutProposals.verifyKyc =  clientData?.kycStatus;
             };
             projectWithoutProposals.totalProposals = val.proposals ? val.proposals.length : 0;
-            projectWithoutProposals.verifyEmail = clientData?.isClientEmailVerify ? clientData?.isClientEmailVerify: false;
-            projectWithoutProposals.verifyPhone =  clientData?.isClientPhoneNoVerify ? clientData?.isClientPhoneNoVerify: false;
-            projectWithoutProposals.verifyKyc =  clientData?.kycStatus ? clientData?.kycStatus: "rejected";
             return projectWithoutProposals;
     }));
         res.status(200).json({ status: "success", userStatus: "SUCCESS", data: finalData });

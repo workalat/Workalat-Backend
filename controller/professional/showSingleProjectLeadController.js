@@ -25,7 +25,6 @@ async function showSingleProjectLeadController(req, res){
             pointsNeeded : 1,
             maxBid : 1,
             projectTimeStamp : 1,
-
         });
         // console.log(data);
         if(data === null){

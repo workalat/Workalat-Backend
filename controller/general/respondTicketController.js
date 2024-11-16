@@ -8,7 +8,7 @@ async function respondTicketController(req, res){
     try{
         let ticketId = req.body.ticketId;
         let userId = req.body.userId;
-        let userType = req.body.userType;  // client/professional/amin
+        let userType = req.body.userType;  // client/professional/admin
         let ticketStatus = req.body.ticketStatus; //closed/admin/customer  // if admin is sending messsage, then it's admin, else it's customer
         let userMessage = req.body.userMessage;
 

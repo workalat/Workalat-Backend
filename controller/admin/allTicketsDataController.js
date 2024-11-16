@@ -5,7 +5,7 @@ const ClientsData = require("../../models/Client");
 const TicketsData = require("../../models/Tickets");
 let stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-async function addingCompletePaymentDataController(req, res){
+async function allTicketsDataController(req, res){
     try{
         let data = await TicketsData.find().select({
             ticketCreatorName : 1,
@@ -15,7 +15,40 @@ async function addingCompletePaymentDataController(req, res){
             ticketRelatedProject  : 1,
             ticketSubject : 1,
         });
-        res.status(200).json({status: "success", userStatus : "SUCCESS" , data: data});
+
+        let finalData = await Promise.all(data.map(async (val, i)=>{
+            console.log(val);
+            if(val.ticketCreatedBy === "client"){
+                let clientData = await ClientsData.findOne({_id : val.ticketCreatorId}).select({
+                    clientFullName : 1, 
+                    clientPictureLink : 1,
+                });
+                let updateData = { ...val._doc }; // "_doc" is used to access the actual document
+                if(clientData !== null){
+                    updateData.ticketCreatorName = clientData.clientFullName;
+                    updateData.ticketCreatorPicture = clientData.clientPictureLink;
+                };
+                return projectWithoutProposals;
+            }
+            else if(val.ticketCreatedBy === "professional"){
+                let professionalData = await ProfessionalsData.findOne({_id : val.ticketCreatorId}).select({
+                    professionalFullName : 1, 
+                    professionalPictureLink : 1,
+                });
+                let updateData = { ...val._doc }; // "_doc" is used to access the actual document
+                if(professionalData !== null){
+                    updateData.ticketCreatorName = professionalData.professionalFullName;
+                    updateData.ticketCreatorPicture = professionalData.professionalPictureLink;
+                };
+                return projectWithoutProposals;
+            }
+            else{
+                return (val)
+            }
+    }));
+
+
+        res.status(200).json({status: "success", userStatus : "SUCCESS" , data: finalData});
         
     }
     catch(e){
@@ -24,4 +57,4 @@ async function addingCompletePaymentDataController(req, res){
     }
 };
 
-module.exports = addingCompletePaymentDataController;
+module.exports = allTicketsDataController;

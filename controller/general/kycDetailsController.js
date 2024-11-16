@@ -6,7 +6,7 @@ async function kycDetailsController(req, res){
         let userId = req.body.userId;
         let userType = req.body.userType;
         let firstName = req.body.firstName;
-        let lastName = req.body.lName;
+        let lastName = req.body.lastName; 
         let email = req.body.email;
         let phoneNo = req.body.phoneNo;
         let postcode = req.body.postcode;

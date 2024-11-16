@@ -1,4 +1,5 @@
 const ClientsData = require("../../models/Client");
+const ProfessionalsData = require("../../models/Professional");
 
 
 
@@ -18,6 +19,10 @@ async function showallKycDataController(req, res){
         }
         else{
 
+            let professionalData = await ProfessionalsData.findOne({
+                _id : userId
+                }).select({kyc : 1});
+                 res.status(200).json({ status: "success", userStatus: "SUCCESS", data: professionalData });
         }
 
      

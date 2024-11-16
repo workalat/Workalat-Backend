@@ -12,7 +12,7 @@ cloudinary.config({
 
 async function applyCertificationController(req, res) {
     let professionalId = req.body.professionalId;
-    let certificateTitle = req.body.certificationTitle;
+    let certificateTitle = req.body.certificateTitle;
     let certificateExpirationMonth = req.body.certificateExpirationMonth;
     let certificateExpirationYear = req.body.certificateExpirationYear;
     let isExpired = req.body.isExpired; //Boolean
