@@ -13,8 +13,33 @@ async function showallCertificateDataController(req, res){
             'certifications.status' : 1,
             'certifications.professionalName' : 1,
             'certifications._id' : 1
-        });
-        res.status(200).json({status : "success", userStatus : "SUCCESS",  data : data})
+        }); 
+        // let d = data?.map((val)=>{
+        //     let finalData= val.certifications.map((v)=>{
+        //         let final = {
+        //             professionalName : v.professionalName,
+        //             status : v.status,
+        //             timeStamp : v.timeStamp,
+        //             certificateId : v._id,
+        //             userId : val._id
+        //         };
+        //         return(final);
+        //     });
+        //     return(...finalData);
+        // });
+        // console.log(d);
+        let finalData = data.flatMap((val) =>
+            val.certifications.map((v) => ({
+              professionalName: v.professionalName,
+              status: v.status,
+              timeStamp: v.timeStamp,
+              certificateId: v._id,
+              userId: val._id,
+            }))
+          );
+      
+          console.log(finalData);
+        res.status(200).json({status : "success", userStatus : "SUCCESS",  data : finalData})
      
     }
     catch(e){

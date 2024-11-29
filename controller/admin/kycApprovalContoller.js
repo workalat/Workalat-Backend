@@ -8,7 +8,6 @@ async function kycApprovalContoller(req, res){
         let adminComment = req.body.adminComment;
         let choice = req.body.choice; //"approved/rejected";
 
-        console.log(req.body);
         if(userType === "client"){
             let client = await ClientsData.findOne({_id : userId}).select({kycStatus : 1, kyc  : 1});
             if(client === null){
@@ -19,7 +18,7 @@ async function kycApprovalContoller(req, res){
             client.kycStatus = `${(choice === "approved") ? "approved" : "rejected"}`;
             
             await client.save();
-            res.status(200).json({status : "success", userStatus : "SUCCESS", message : "KYC Request Status Changed Successfully", currentStatus : client.kycStatus})
+            res.status(200).json({status : "success", userStatus : "SUCCESS", message : `KYC Request ${choice?.toUpperCase()} Successfully`, currentStatus : client.kycStatus})
         }
         else{
             
@@ -32,7 +31,7 @@ async function kycApprovalContoller(req, res){
             professional.kycStatus = `${(choice === "approved") ? "approved" : "rejected"}`;
             
             await professional.save();
-            res.status(200).json({status : "success", userStatus : "SUCCESS", message : "KYC Request Status Changed Successfully", currentStatus : professional.kycStatus})
+            res.status(200).json({status : "success", userStatus : "SUCCESS", message : `KYC Request ${choice?.toUpperCase()} Successfully`, currentStatus : professional.kycStatus})
         }
         
 

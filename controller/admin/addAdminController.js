@@ -4,7 +4,7 @@ async function addAdminController(req, res){
         let admin_name = req.body.admin_name;
         let admin_email = req.body.admin_email;
         let admin_password = req.body.admin_password;
-        let admin_status = req.body.admin_status;  //user/system
+        let admin_status = req.body.admin_status;  //user/system/support
         console.log(req.body);
 
         let findAdmin = await AdminData.findOne({admin_email: admin_email});

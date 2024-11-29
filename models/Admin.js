@@ -8,9 +8,10 @@ let AdminSchema  = new mongoose.Schema({
     admin_name : {
         type : String   
     },
-    // admin_username: {
-    //     type : String   
-    // },
+    adminPictureLink : {
+        type : String,
+        default : "https://www.w3schools.com/howto/img_avatar.png"
+    },
     admin_email  : {
         type: String,
         required: true,
@@ -35,6 +36,10 @@ let AdminSchema  = new mongoose.Schema({
             type: String
         }
     }],
+    lastLoginDate : {
+        type : Date,
+        default : Date.now()
+    },
     
     
 })

@@ -11,14 +11,7 @@ async function payAsYouGoProjectController(req, res){
             let projectData = await ProjectsData.findOne({_id : projectId});
             let professionalData = await ProfessionalsData.findOne({_id : professionalId});
             let adminFeatureData  = await AdminFeaturesData.findOne().select({points : 1});
-            let amount;
-            adminFeatureData.points.map((val)=>{
-                console.log(val.point , projectData.pointsNeeded)
-                if(val.point === projectData.pointsNeeded){
-                    
-                    amount = val.amount
-                }
-            })
+            let amount = projectData.pointsNeeded * 0.99;
             console.log("amount" , amount);
             if(projectData !== null && professionalData!== null){
                 if(projectData.maxBid<1){

@@ -11,7 +11,7 @@ let ClientsDataSchema  = new mongoose.Schema({
    }, 
    clientLName : {
         type : String,
-        lowercase: true,
+        lowercase: true, 
         default : ""
    },
    clientFullName : {

@@ -7,6 +7,8 @@ async function verifyTokenController(req, res) {
   // let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzA1MWUyY2QyMDQyN2E0Y2EwMWMyMGUiLCJyZWdpc3RlckFzIjoicHJvZmVzc2lvbmFsIiwiaWF0IjoxNzI4NDc0MzQ3fQ.j-Npp4350Ib2_cTg1sNotEqNhD1xyTkV6gDcKTVS7xkasd";
   let type = req.body.type;
   let auth = req.body.auth || false;
+
+  console.log(req.body);
   try {
     if(auth === false || !auth){
         let verify = await verification({ token: token });

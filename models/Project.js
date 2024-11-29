@@ -164,7 +164,7 @@ let ProjectSchema  = new mongoose.Schema({
     },
     projectStatusAdmin: {
         type : Boolean,
-        default : true
+        default : false
     },
     isProjectUrgent : {
         type : Boolean,
@@ -260,7 +260,7 @@ let ProjectSchema  = new mongoose.Schema({
         type : Boolean,
         default : false
     },
-    clientReview : {
+    clientReview : { 
         type : Object,
         default : {}
     },

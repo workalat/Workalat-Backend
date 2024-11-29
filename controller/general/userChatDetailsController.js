@@ -6,12 +6,62 @@ const TicketsData = require("../../models/Tickets");
 async function userChatDetailsController(req, res){
     try{
         let userId = req.body.userId;
-        let userType = req.body.userType; 
+        let userType = req.body.userType; //client, professional, admin
 
         console.log(req.body);
 
-
-        if(userType === "client"){
+        if(userType !== "admin"){
+            if(userType === "client"){
+                let client = await ClientsData.findOne({_id : userId}).select({
+                    clientFullName : 1,
+                    activeChat  : 1,
+                    chatNotifications : 1,
+                    clientEmail : 1,
+                    clientPictureLink : 1
+                });
+                if(client === null){
+                    throw new Error("No User Found.")
+                }
+                else{
+                    res.status(200).json({status : "success", userStatus : "SUCCESS", data : {      
+                        id : client._id,
+                        email : client.clientEmail,
+                        username : client.clientFullName,
+                        avatar : client.clientPictureLink,
+                        activeChat : client.activeChat,
+                        chatNotifications : client.chatNotifications,
+                        businessName : ""
+                    }});
+                }
+            }
+            else if(userType === "professional"){ 
+                let professional = await ProfessionalsData.findOne({_id : userId}).select({
+                    professionalFullName : 1,
+                    activeChat  : 1,
+                    chatNotifications : 1,
+                    professionalEmail : 1,
+                    professionalPictureLink : 1,
+                    professionalCompanyName : 1
+                });
+                console.log(professional);
+                if(professional === null){
+                    throw new Error("No User Found.")
+                }
+                else{
+                    res.status(200).json({status : "success", userStatus : "SUCCESS", data : {
+                        id : professional._id,
+                        email : professional.professionalEmail,
+                        username : professional.professionalFullName,
+                        avatar : professional.professionalPictureLink,
+                        activeChat : professional.activeChat,
+                        chatNotifications : professional.chatNotifications,
+                        businessName : professional.professionalCompanyName
+                    }});
+                }
+            
+            }
+        }
+        else{
             let client = await ClientsData.findOne({_id : userId}).select({
                 clientFullName : 1,
                 activeChat  : 1,
@@ -19,10 +69,7 @@ async function userChatDetailsController(req, res){
                 clientEmail : 1,
                 clientPictureLink : 1
             });
-            if(client === null){
-                throw new Error("No User Found.")
-            }
-            else{
+            if(client !== null){
                 res.status(200).json({status : "success", userStatus : "SUCCESS", data : {      
                     id : client._id,
                     email : client.clientEmail,
@@ -33,33 +80,34 @@ async function userChatDetailsController(req, res){
                     businessName : ""
                 }});
             }
-        }
-        else if(userType === "professional"){ 
-            let professional = await ProfessionalsData.findOne({_id : userId}).select({
-                professionalFullName : 1,
-                activeChat  : 1,
-                chatNotifications : 1,
-                professionalEmail : 1,
-                professionalPictureLink : 1,
-                professionalCompanyName : 1
-            });
-            console.log(professional);
-            if(professional === null){
-                throw new Error("No User Found.")
-            }
             else{
-                res.status(200).json({status : "success", userStatus : "SUCCESS", data : {
-                    id : professional._id,
-                    email : professional.professionalEmail,
-                    username : professional.professionalFullName,
-                    avatar : professional.professionalPictureLink,
-                    activeChat : professional.activeChat,
-                    chatNotifications : professional.chatNotifications,
-                    businessName : professional.professionalCompanyName
-                }});
+                let professional = await ProfessionalsData.findOne({_id : userId}).select({
+                    professionalFullName : 1,
+                    activeChat  : 1,
+                    chatNotifications : 1,
+                    professionalEmail : 1,
+                    professionalPictureLink : 1,
+                    professionalCompanyName : 1
+                });
+                console.log(professional);
+                if(professional === null){
+                    throw new Error("No User Found.")
+                }
+                else{
+                    res.status(200).json({status : "success", userStatus : "SUCCESS", data : {
+                        id : professional._id,
+                        email : professional.professionalEmail,
+                        username : professional.professionalFullName,
+                        avatar : professional.professionalPictureLink,
+                        activeChat : professional.activeChat,
+                        chatNotifications : professional.chatNotifications,
+                        businessName : professional.professionalCompanyName
+                    }});
+                }
             }
-         
+
         }
+        
     }
     catch(e){
         console.log("Error while marking fetching Dashboard Data.", e);

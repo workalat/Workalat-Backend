@@ -36,8 +36,11 @@ async function addWalletTopupDataProfessionalController(req, res) {
                 transactionDes: session.invoice_creation.description,
                 des : "Wallet Top up",
                 transactionTimeStamp: Date.now(),
-                transactionStatus: "success"
-            }
+                transactionStatus: "success",
+                transactionType : "credit",
+                professionalId : session.metadata.professionalId
+            } ;
+            let addTransactionData = await TransactionData.create(data);
             professional.pointsHistory.push(data);
             professional.professionalTotalBidPoints += parseFloat(session.metadata.points);
             await professional.save();

@@ -20,9 +20,8 @@ async function certificationApprovalController(req, res){
 
         findCertificate.status = `${(choice === "approved") ? "approved" :"rejected"}`
         findCertificate.adminComment = adminComment;
-        professional.isAppliedCertificate = false;
         await professional.save();
-        res.status(200).json({status : "success", userStatus : "SUCCESS", message : "Certification Request Status Changed Successfully", currentStatus : findCertificate.status});
+        res.status(200).json({status : "success", userStatus : "SUCCESS", message : `Certification Request ${choice?.toUpperCase()} Successfully`, currentStatus : findCertificate.status});
 
     }
     catch(e){

@@ -21,7 +21,7 @@ async function addJobQuestionController(req, res){
             if(find === true){
                 adminFeatureData.markModified('categoryQuesions')
                 await adminFeatureData.save();
-                res.status(200).json({status : "success", userStatu : "SUCCESS", message : "Questions Addedd Successfully"});
+                res.status(200).json({status : "success", userStatu : "SUCCESS", message : "Questions Customised Successfully"});
             }
             else{
                 adminFeatureData.categoryQuesions.push({type : type, slugs : slugs});
@@ -51,7 +51,7 @@ async function addJobQuestionController(req, res){
             if(find === true){                
                 adminFeatureData.markModified('serviceQuestions')
                 await adminFeatureData.save();
-                res.status(200).json({status : "success", userStatu : "SUCCESS", message : "Questions Addedd Successfully"});
+                res.status(200).json({status : "success", userStatu : "SUCCESS", message : "Questions Customised Successfully"});
             }
             else{
                 adminFeatureData.serviceQuestions.push({type : type, slugs : slugs});

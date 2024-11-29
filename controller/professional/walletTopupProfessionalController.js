@@ -11,9 +11,9 @@ async function walletTopupProfessionalController(req, res){
         if(product){
             let price = await stripe.prices.create({
                 product : `${product.id}`,
-                unit_amount : (amount*100) + (amount*100) * 0.2,
+                unit_amount : ((amount*100) + (amount*100) * 0.2),
                 currency : "gbp"
-            });
+            }); 
             if(price.id){ 
                 let professionalData= await ProfessionalsData.findOne({_id : professionalId}).select({
                     professionalFullName : 1,

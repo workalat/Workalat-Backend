@@ -1,6 +1,7 @@
 const AdminFeaturesData = require("../../models/AdminFeatures");
 let ProfessionalsData = require("../../models/Professional");
 const ProjectsData = require("../../models/Project");
+const TransactionData = require("../../models/Transaction");
 let stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 async function payAsYouGoProjectController(req, res) {
@@ -32,13 +33,16 @@ async function payAsYouGoProjectController(req, res) {
         else{
             let data = {
                 transactionId: sessionId,
-                points: session.metadata.points,
+                points: session.metadata.points, 
                 transactionAmount: session.metadata.amount,
                 transactionDes: session.invoice_creation.description,
                 des : "Leads Purchase",
                 transactionTimeStamp: Date.now(),
-                transactionStatus: "success"
+                transactionStatus: "success",
+                transactionType : "credit",
+                professionalId : session.metadata.professionalId
             }
+            let addTransactionData = await TransactionData.create(data);
             professional.pointsHistory.push(data);
             professional.professionalTotalBidPoints += parseFloat(session.metadata.points);
             

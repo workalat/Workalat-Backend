@@ -35,14 +35,14 @@ async function addMembershipPurchaseDataController(req, res) {
                 transactionPurpose : "Membership Purchase",
                 transactionDes: session.invoice_creation.description,
                 transactionStatus: "success",
-                isRequestCancellation : false,
+                isRequestCancellation : false, 
                 timeStamp: Date.now(),
             }
             professional.membershipTransactionHistory.push(data);
-            professional.membershipStatus = "active";
-            professional.isMembership = true;
-            professional.profileStatus = "premium";
-            professional.membershipLeads += 5;
+            professional.membershipStatus = "pending";
+            professional.isMembership = false;
+            professional.profileStatus = "normal";
+            // professional.membershipLeads += 5;
 
             const now = new Date();
             professional.memberShipExpirationDate = new Date(now.setDate(now.getDate() + 30)).toISOString();

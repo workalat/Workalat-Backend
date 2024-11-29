@@ -15,7 +15,7 @@ let ProfessionalDataSchema  = new mongoose.Schema({
         lowercase : true,
         default : ""
    },
-   professionalFullName : {
+   professionalFullName : { 
         type : String,
         lowercase : true,
         default : ""
@@ -68,7 +68,7 @@ let ProfessionalDataSchema  = new mongoose.Schema({
         type : Boolean,
         default : false
     },
-    isprofessionalPicture : {
+    isprofessionalPicture : { 
         type : Boolean,
         default : false
     }, 
@@ -201,7 +201,7 @@ let ProfessionalDataSchema  = new mongoose.Schema({
     professionalTotalBidPoints : { 
         type : Number,
         default : 10
-    },
+    }, 
     totalRatings : {
         type : Number,
         default : 0
@@ -301,7 +301,6 @@ let ProfessionalDataSchema  = new mongoose.Schema({
         professionalId :{type : String},
         professionalName :{type : String},
         professionalProposalDes :{type : String},
-        // professionalBidAmount :{type : Number},
         clientId :{type : String},
         clientName :{type : String},
         clientEmail :{type : String},
@@ -340,7 +339,8 @@ let ProfessionalDataSchema  = new mongoose.Schema({
         transactionDes : {type : String},   //how much points have been bought
         points : {type: String},
         transactionAmount : {type : String},
-        transactionTimeStamp : {type : String}, 
+        transactionTimeStamp : {type : String},  
+        des : {type : String},
         transactionStatus : {type : String, default : "fail" }   //success/fail
     }], 
     
@@ -366,7 +366,7 @@ let ProfessionalDataSchema  = new mongoose.Schema({
         type : Number,
         default : 0
     },
-    profileStatus: {
+    profileStatus: { 
         type : String,
         default : "normal"  //normal/premium
     },
@@ -376,7 +376,7 @@ let ProfessionalDataSchema  = new mongoose.Schema({
     },
     membershipStatus : {
         type : String,
-        default : "closed"  //active (isMembership : true), closed/cancelled (isMembership : false), expired (isMembership: true)
+        default : "closed"  // pending(isMembership : false)  active (isMembership : true), closed/cancelled (isMembership : false), expired (isMembership: true)
     },
     memberShipExpirationDate: {
         type : Date,

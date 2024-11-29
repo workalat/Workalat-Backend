@@ -13,7 +13,7 @@ const twilio = require('twilio');
 
 
 
-
+ 
 //Cors Setup 
 let corsOptions = {
     origin: ['http://localhost:3000','http://localhost:3001','https://workalat-frontend.vercel.app' ],
@@ -204,9 +204,39 @@ const showSingleKycDataRoute = require("../Routes/admin/showSingleKycDataRoute")
 const showallCertificateDataRoute = require("../Routes/admin/showallCertificateDataRoute");
 const showSingleCertificationDataRoute = require("../Routes/admin/showSingleCertificationDataRoute");
 const showAllQuestionsRoute = require("../Routes/admin/showAllQuestionsRoute");
+const editQuestionsRoute = require("../Routes/admin/editQuestionsRoute");
 const showAllAssignedQuestionRoute = require("../Routes/admin/showAllAssignedQuestionRoute");
 const adminDashboardDataRoute = require("../Routes/admin/dashboardDataRoute");
 const allUserRoute = require("../Routes/admin/allUserRoute");
+const getSingleUserDetailsRoute = require("../Routes/admin/getSingleUserDetailsRoute");
+const adminStatusUsersRoute = require("../Routes/admin/adminStatusUsersRoute");
+const addPointsProfessionalRoute = require("../Routes/admin/addPointsProfessionalRoute");
+const showProjectReviewsRoute = require("../Routes/admin/showProjectReviewsRoute");
+const deleteProjectReviewRoute = require("../Routes/admin/deleteProjectReviewRoute");
+const declineProposalRoute = require("../Routes/admin/declineProposalRoute");
+const deletePointsBudegetRoute = require("../Routes/admin/deletePointsBudegetRoute");
+const showAllAdminRoute = require("../Routes/admin/showAllAdminRoute");
+const adminLoginRoute = require("../Routes/admin/adminLoginRoute");
+const verifyAdminTokenRoute = require("../Routes/admin/verifyAdminTokenRoute");
+const activitiesRoute = require("../Routes/admin/activitiesRoute");
+const refundTransationRoute = require("../Routes/admin/refundTransationRoute");
+const memberShipRoute = require("../Routes/admin/memberShipRoute");
+const changeMembershipStatusRoute = require("../Routes/admin/changeMembershipStatusRoute");
+const editCategoryRoute = require("../Routes/admin/editCategoryRoute");
+const deleteCategoryRoute = require("../Routes/admin/deleteCategoryRoute");
+const editServiceRoute = require("../Routes/admin/editServiceRoute");
+const showAllWalletsDataRoute = require("../Routes/admin/showAllWalletsDataRoute");
+const editWalletDataRoute = require("../Routes/admin/editWalletDataRoute");
+const deleteWalletDataRoute = require("../Routes/admin/deleteWalletDataRoute");
+const showAllPointsWalletsDataRoute = require("../Routes/admin/showAllPointsWalletsDataRoute");
+const editPointsWalletDataRoute = require("../Routes/admin/editPointsWalletDataRoute");
+const deletePointsWalletDataRoute = require("../Routes/admin/deletePointsWalletDataRoute");
+const deleteQuestionsRoute = require("../Routes/admin/deleteQuestionsRoute");
+const creditAndWalletRoute = require("../Routes/admin/creditAndWalletRoute");
+const logoutAdminRoute = require("../Routes/admin/logoutAdminRoute");
+const deleteJobAssignRoute = require("../Routes/admin/deleteJobAssignRoute");
+const deleteServiceRoute = require("../Routes/admin/deleteServiceRoute");
+const addPointsWalletRoute = require("../Routes/admin/addPointsWalletRoute");
 
 
 /////////////////////////////////////////////////////// API Stuffs /////////////////////////////////////////////////////////////////////////////////////
@@ -632,19 +662,51 @@ app.use("/showSingleProjectLead", showSingleProjectLeadRoute);
 //Add Category
 app.use("/addCategory", addCategoryRoute);
 
+//Edit Category
+app.use("/editCategory", editCategoryRoute);
+
+//Delete Category
+app.use("/deleteCategory", deleteCategoryRoute);
+
+
 //ADD SERVICES
 app.use("/addService", addServiceRoute);
 
 //ADD SERVICES
 app.use("/allServiceAdmin", showAllServiceDataRoute);
 
+//EDIT SERVICES
+app.use("/editService", editServiceRoute);
+
+
+//DELETE SERVICES
+app.use("/deleteService", deleteServiceRoute);
+
 
 //ADD JOBS'S QUESTIONS
 app.use("/addQuestions", addQuestionsRoute);
 
 
+//EDIT JOBS'S QUESTIONS
+app.use("/editQuestions", editQuestionsRoute);
+
+
+
+//DELETE JOBS'S QUESTIONS
+app.use("/deleteQuestions", deleteQuestionsRoute);
+
+
+
+
 //ASSIGN QUESTIONS TO SERVICES/CATEGORIES
 app.use("/addJobsQuestions", addJobQuestionRoute);
+
+
+
+
+//DELETE QUESTIONS TO SERVICES/CATEGORIES
+app.use("/deleteJobsQuestions", deleteJobAssignRoute);
+
 
 
 //CERTIFICATION APPROVAL
@@ -707,8 +769,110 @@ app.use("/showAllAssignedQuestions", showAllAssignedQuestionRoute);
 app.use("/dashboard", adminDashboardDataRoute);
 
 
-//Show All Dashboard Data
+//Show All Users Data
 app.use("/allUserAdmin", allUserRoute);
+
+
+//Show All Admins Data
+app.use("/showAllAdmin", allUserRoute);
+
+
+//Show Single Users Data
+app.use("/getSingleUserAdmin", getSingleUserDetailsRoute);
+
+
+//Access/Banned user account
+app.use("/changeUserStatusAdmin", adminStatusUsersRoute);
+
+
+//Add points to professional accounts
+app.use("/addPointsProfessional", addPointsProfessionalRoute);
+
+
+//Show all reviews of project
+app.use("/showReviews", showProjectReviewsRoute);
+
+
+//Delete a specific review
+app.use("/deleteReview", deleteProjectReviewRoute);
+
+
+//Decline a proposal of project
+app.use("/declineProposal", declineProposalRoute);
+
+//Delete a point Rule
+app.use("/deletePointRule", deletePointsBudegetRoute);
+
+
+//Show all Admin Data
+app.use("/showAllAdmin", showAllAdminRoute);
+
+
+//Login as Admin
+app.use("/adminLogin", adminLoginRoute);
+
+
+//Verify Admin
+app.use("/verifyAdmin", verifyAdminTokenRoute);
+
+
+
+
+//Activities page data
+app.use("/activities", activitiesRoute);
+
+
+//Membership page data
+app.use("/membership", memberShipRoute);
+
+
+//Membership page data
+app.use("/refudTransaction", refundTransationRoute);
+
+
+//Change membership Status data
+app.use("/changeMembershipStatus", changeMembershipStatusRoute);
+
+
+
+//CREDIT AND WALLET PAGE DATA
+app.use("/creditAndWallet", creditAndWalletRoute);
+
+
+
+
+//ALL WALLET DATA
+app.use("/showWalletData", showAllWalletsDataRoute);
+
+
+//EDIT WALLET DATA
+app.use("/editWalletData", editWalletDataRoute);
+
+
+//DELETE WALLET DATA
+app.use("/deleteWalletData", deleteWalletDataRoute);
+
+
+
+//ALL  POINTS WALLET DATA
+app.use("/showPointsWalletData", showAllPointsWalletsDataRoute);
+
+
+//ALL  POINTS WALLET DATA
+app.use("/addPointsWalletData", addPointsWalletRoute);
+
+
+//EDIT POINTS WALLET DATA
+app.use("/editPointsWalletData", editPointsWalletDataRoute);
+
+
+//DELE POINTSTE WALLET DATA
+app.use("/deletePointsWalletData", deletePointsWalletDataRoute);
+
+
+//ADMIN LOGOUT
+app.use("/logout-admin", logoutAdminRoute);
+
 
 
 //////////////////////////// LISTNEING PORT /////////////////////////////////////////
