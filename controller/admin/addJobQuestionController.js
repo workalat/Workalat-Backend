@@ -21,20 +21,20 @@ async function addJobQuestionController(req, res){
             if(find === true){
                 adminFeatureData.markModified('categoryQuesions')
                 await adminFeatureData.save();
-                res.status(200).json({status : "success", userStatu : "SUCCESS", message : "Questions Customised Successfully"});
+                res.status(200).json({status : "success", userStatu : "SUCCESS", message : "Assigning Updated Successfully"});
             }
             else{
                 adminFeatureData.categoryQuesions.push({type : type, slugs : slugs});
                 adminFeatureData.markModified('categoryQuesions')
                 await adminFeatureData.save();
-                res.status(200).json({status : "success", userStatu : "SUCCESS", message : "Questions Addedd Successfully"});
+                res.status(200).json({status : "success", userStatu : "SUCCESS", message : "Assigning Completed Successfully"});
             }
             }
             else{
                 adminFeatureData.categoryQuesions.push({type : type, slugs : slugs});
                 adminFeatureData.markModified('categoryQuesions')
                 await adminFeatureData.save();
-                res.status(200).json({status : "success", userStatu : "SUCCESS", message : "Questions Addedd Successfully"});
+                res.status(200).json({status : "success", userStatu : "SUCCESS", message : "Assigning Completed Successfully"});
             }
         }
         else{
@@ -51,20 +51,20 @@ async function addJobQuestionController(req, res){
             if(find === true){                
                 adminFeatureData.markModified('serviceQuestions')
                 await adminFeatureData.save();
-                res.status(200).json({status : "success", userStatu : "SUCCESS", message : "Questions Customised Successfully"});
+                res.status(200).json({status : "success", userStatu : "SUCCESS", message : "Assigning Updated Successfully"});
             }
             else{
                 adminFeatureData.serviceQuestions.push({type : type, slugs : slugs});
                 adminFeatureData.markModified('serviceQuestions')
                 await adminFeatureData.save();
-                res.status(200).json({status : "success", userStatu : "SUCCESS", message : "Questions Addedd Successfully"});
+                res.status(200).json({status : "success", userStatu : "SUCCESS", message : "Assigning Completed Successfully"});
             }
             }
             else{
                 adminFeatureData.serviceQuestions.push({type : type, slugs : slugs});
                 adminFeatureData.markModified('serviceQuestions')
                 await adminFeatureData.save();
-                res.status(200).json({status : "success", userStatu : "SUCCESS", message : "Questions Addedd Successfully"});
+                res.status(200).json({status : "success", userStatu : "SUCCESS", message : "Assigning Completed Successfully"});
             }
 
         }
