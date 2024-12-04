@@ -16,7 +16,7 @@ const twilio = require('twilio');
  
 //Cors Setup 
 let corsOptions = {
-    origin: ['http://localhost:3000','http://localhost:3001','https://workalat-frontend.vercel.app' ],
+    origin: ["http://localhost:3000","http://localhost:3001","https://workalat-frontend.vercel.app" ],
     methods: "GET, POST, PUT, DELETE, PATCH, HEAD",
     allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Origin'],
     credentials: true,
@@ -29,6 +29,23 @@ app.use(bodyParser.json());
 app.use(cors(corsOptions))
 
 
+// let corsOptions = {
+//     origin: ['http://localhost:3000', 'http://localhost:3001', 'https://workalat-frontend.vercel.app'],
+//     methods: "GET, POST, PUT, DELETE, PATCH, HEAD",
+//     allowedHeaders: ['Content-Type', 'Authorization'],
+//     credentials: true,
+//     optionsSuccessStatus: 204
+// };
+
+// // Enable CORS
+// app.use(cors(corsOptions));
+// app.options('*', cors(corsOptions)); // Handle preflight requests
+
+// // Body parsers
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
 
 //MIDDLEWARES
 let verification = require("../middleware/verification");
