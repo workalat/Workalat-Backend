@@ -5,7 +5,6 @@ async function showLeadsController(req, res) {
     try {
         let  userId  = req.body.userId;
         let choice = req.body.choice; //leads, dashboard
-        console.log(req.body);
 
         // Fetch the professional's data
         let data = await ProfessionalsData.findOne({ _id: userId }).select({
@@ -124,7 +123,6 @@ async function showLeadsController(req, res) {
         }
         else{
             if(data.professionalSkills.length>0){
-                // console.log("No Nationwide and skilles");
                 projects = await ProjectsData.find({
                     $and: [
                         // Match based on primary service or bio relevance
@@ -173,7 +171,6 @@ async function showLeadsController(req, res) {
                 });
             }
             else{
-                // console.log("No Nationwide and No skilles");
                 projects = await ProjectsData.find({
                     $and: [
                         // Match based on primary service or bio relevance
@@ -224,9 +221,7 @@ async function showLeadsController(req, res) {
         }
 
         // Filter out projects that already have a proposal from the professional
-        // console.log(projects.length);
         let finalData;
-        console.log("Projects", projects.length);
         if(projects.length>0){
             finalData = projects.filter(project => {
                 if(project.proposals.length>0){
@@ -241,7 +236,6 @@ async function showLeadsController(req, res) {
                 return projectWithoutProposals;
             });
             
-        console.log("Final", finalData.length);
             
             if(choice === "leads"){
                 res.status(200).json({ status: "success", userStatus: "SUCCESS", message: "Data Found Successfully", data: finalData , userSkills : data.professionalSkills, userPrimarySkill : data.professionalPrimaryService});
@@ -262,7 +256,7 @@ async function showLeadsController(req, res) {
         // console.log(finalData);
         // res.status(200).json({ status: "success", userStatus: "SUCCESS", message: "Data Found Successfully", data: finalData });
     } catch (e) {
-        console.log("Error while adding professional's details", e);
+        // console.log("Error while adding professional's details", e);
         res.status(400).json({ status: "fail", userStatus: "FAILED", message: e.message });
     }
 };

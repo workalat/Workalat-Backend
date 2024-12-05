@@ -1,11 +1,9 @@
-let AwardedData = require("../../models/Awarded");
 let ClientsData = require("../../models/Client");
 const ProjectsData = require("../../models/Project");
 
 async function showAllAwardedProfController(req, res){
     try{
         let userId = req.body.userId;
-        console.log(userId);
         let data = await ProjectsData.find({$and : [{awardedProfessionalId : userId},{ projectStatus: { $ne: 'completed' }}]}).select({
             professionalId : 1,
             ProjectId : 1,
@@ -24,39 +22,32 @@ async function showAllAwardedProfController(req, res){
             clientName : 1,
             clientPictureLink : 1,
             clientId : 1
-        });
-        console.log(data.length);
+        }); 
         if(data.length < 1){
             res.status(200).json({ status: "success", userStatus: "SUCCESS", message: "Data Found Successfully", data: []});
         }
         else{
-            // let d = await Promise.all(
-            //     data.map(async (award) => {
-            //         let clientData = await ClientsData.findOne({ _id: award.clientId }).select({
-            //             clientFullName: 1,
-            //             isClientPicture: 1,
-            //             clientPictureLink: 1
-            //         });
-            //         if(clientData !== null){
-            //             return { ...award.toObject(), ...clientData.toObject() };
-            //         }
-
-            //         // Merge the awarded data with the client's data
-            //         // return { ...award.toObject(), ...clientData.toObject() };
-            //     })
-            // );
-            // // console.log(data)
-            // console.log(d);
-            // if(d === null){
-            //     throw new Error("No Data Found , please login again");
-            // }
-            // else{
-                res.status(200).json({ status: "success", userStatus: "SUCCESS", message: "Data Found Successfully", data: data });
-            // }
+            let finalData = await Promise.all(data.map(async (val, i)=>{
+                if(val.clientId.length > 0){
+                    let professionalData = await ClientsData.findOne({_id : val.clientId}).select({
+                        clientFullName : 1,
+                        clientPictureLink : 1,
+                    });
+                    let updatedData = { ...val._doc }; // "_doc" is used to access the actual document
+                    if(professionalData !== null){
+                        updatedData.clientName = professionalData.clientFullName;
+                        updatedData.clientPictureLink = professionalData.clientPictureLink;
+                        return updatedData;
+                    };
+                }
+                return(val);
+        }));
+                res.status(200).json({ status: "success", userStatus: "SUCCESS", message: "Data Found Successfully", data: finalData });
+            
         }
     }
     catch(e){
-        console.log("Error while adding fetching propsals data", e);
+        // console.log("Error while adding fetching propsals data", e);
         res.status(400).json({status : "fail", userStatus : "FAILED" ,message : e.message});
     }
 };
