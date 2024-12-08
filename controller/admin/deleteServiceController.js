@@ -29,7 +29,7 @@ async function deleteServiceController(req, res) {
 
     // Remove service-related questions from serviceQuestions
     data.serviceQuestions = data.serviceQuestions.filter(
-      (question) => question.type.toLowerCase() !== serviceToDelete
+      (question) => question.type !== serviceToDelete
     );
 
     // Save the updated document

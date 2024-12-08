@@ -76,6 +76,61 @@ async function findProfessionals(){
 }
 
 
+async function getLeadsStatus() {
+    // Get the current month and year
+    const startOfMonth = moment().startOf("month").toDate();
+    const startOfYear = moment().startOf("year").toDate();
+    const now = new Date();
+  
+    // Queries for leads within this month and this year
+    const [thisMonthOpenLeads, thisMonthAwardedLeads, thisMonthRejectedLeads] = await Promise.all([
+      ProjectsData.find({
+        awardedStatus: "unawarded",
+        projectTimeStamp: { $gte: startOfMonth, $lt: now }
+      }).countDocuments(),
+      ProjectsData.find({
+        awardedStatus: "awarded",
+        projectTimeStamp: { $gte: startOfMonth, $lt: now }
+      }).countDocuments(),
+      ProjectsData.find({
+        projectStatusAdmin: false,
+        projectTimeStamp: { $gte: startOfMonth, $lt: now }
+      }).countDocuments(),
+    ]);
+  
+    const [thisYearOpenLeads, thisYearAwardedLeads, thisYearRejectedLeads] = await Promise.all([
+      ProjectsData.find({
+        awardedStatus: "unawarded",
+        projectTimeStamp: { $gte: startOfYear, $lt: now }
+      }).countDocuments(),
+      ProjectsData.find({
+        awardedStatus: "awarded",
+        projectTimeStamp: { $gte: startOfYear, $lt: now }
+      }).countDocuments(),
+      ProjectsData.find({
+        projectStatusAdmin: false,
+        projectTimeStamp: { $gte: startOfYear, $lt: now }
+      }).countDocuments(),
+    ]);
+  
+    // Construct the result object
+    const leadsStatus = [
+      {
+        title: "this month",
+        openLead: thisMonthOpenLeads,
+        awarded: thisMonthAwardedLeads,
+        rejected: thisMonthRejectedLeads,
+      },
+      {
+        title: "this year",
+        openLead: thisYearOpenLeads,
+        awarded: thisYearAwardedLeads,
+        rejected: thisYearRejectedLeads,
+      },
+    ];
+  
+    return leadsStatus;
+}  
 
 
 
@@ -125,6 +180,9 @@ async function dashboardDataController(req, res){
     //    console.log( "Total PRofessionals" ,numerTotalProfessionals);
     //    console.log( "Upper Cards" ,uppercards);
     //    console.log( "Total PRemium User" ,totalPremiumProfessional);
+
+    let leadsData = await getLeadsStatus();
+
         res.status(200).json({status : "success", userStatus : "SUCCESS", message : "Dashboard Data Fetched Successfully.", data:{
             totalClientsArray,
             numberTotalClient,
@@ -135,7 +193,8 @@ async function dashboardDataController(req, res){
             totalOpenLeads,
             totalAwardedLeads,
             totalRejectedLeads,
-            totalAdminTickets
+            totalAdminTickets,
+            leadsData
         }});
 
 
