@@ -11,7 +11,8 @@ async function showSingleLeadsBidController(req, res){
             serviceTitle : 1,
             proposals : 1,
             clientId  :1,
-            clientPictureLink : 1
+            clientPictureLink : 1,
+            awardedProfessionalId : 1
         });
 
         let finalData = await Promise.all(data.map(async (val, i)=>{

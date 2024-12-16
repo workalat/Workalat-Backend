@@ -254,6 +254,8 @@ const logoutAdminRoute = require("../Routes/admin/logoutAdminRoute");
 const deleteJobAssignRoute = require("../Routes/admin/deleteJobAssignRoute");
 const deleteServiceRoute = require("../Routes/admin/deleteServiceRoute");
 const addPointsWalletRoute = require("../Routes/admin/addPointsWalletRoute");
+const updateAdminRoute = require("../Routes/admin/updateAdminRoute");
+const changeTicketStatusRoute = require("../Routes/admin/changeTicketStatusRoute");
 
 
 /////////////////////////////////////////////////////// API Stuffs /////////////////////////////////////////////////////////////////////////////////////
@@ -833,6 +835,8 @@ app.use("/adminLogin", adminLoginRoute);
 app.use("/verifyAdmin", verifyAdminTokenRoute);
 
 
+//Update Admin Data
+app.use("/updateAdmin", updateAdminRoute);
 
 
 //Activities page data
@@ -885,6 +889,11 @@ app.use("/editPointsWalletData", editPointsWalletDataRoute);
 
 //DELE POINTSTE WALLET DATA
 app.use("/deletePointsWalletData", deletePointsWalletDataRoute);
+
+
+
+//DELE POINTSTE WALLET DATA
+app.use("/changeTicketStatus", changeTicketStatusRoute);
 
 
 //ADMIN LOGOUT

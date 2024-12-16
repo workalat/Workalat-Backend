@@ -14,33 +14,38 @@ async function allTicketsDataController(req, res){
             ticketStatus  : 1,
             ticketRelatedProject  : 1,
             ticketSubject : 1,
+            ticketCreatedBy : 1,
+            ticketCreatorId : 1
         });
 
         let finalData = await Promise.all(data.map(async (val, i)=>{
-            console.log(val);
             if(val.ticketCreatedBy === "client"){
                 let clientData = await ClientsData.findOne({_id : val.ticketCreatorId}).select({
                     clientFullName : 1, 
                     clientPictureLink : 1,
                 });
+                console.log("CLIENT" ,clientData);
                 let updateData = { ...val._doc }; // "_doc" is used to access the actual document
                 if(clientData !== null){
                     updateData.ticketCreatorName = clientData.clientFullName;
                     updateData.ticketCreatorPicture = clientData.clientPictureLink;
                 };
-                return projectWithoutProposals;
+                
+                return updateData;
             }
             else if(val.ticketCreatedBy === "professional"){
                 let professionalData = await ProfessionalsData.findOne({_id : val.ticketCreatorId}).select({
                     professionalFullName : 1, 
                     professionalPictureLink : 1,
                 });
+                console.log("PROFESSIONAL" ,professionalData);
                 let updateData = { ...val._doc }; // "_doc" is used to access the actual document
                 if(professionalData !== null){
                     updateData.ticketCreatorName = professionalData.professionalFullName;
                     updateData.ticketCreatorPicture = professionalData.professionalPictureLink;
                 };
-                return projectWithoutProposals;
+                
+                return updateData;
             }
             else{
                 return (val)
@@ -52,7 +57,7 @@ async function allTicketsDataController(req, res){
         
     }
     catch(e){
-        console.log("Error while showing all the leads details page.", e);
+        console.log("Error while showing all the ticket data.", e);
         res.status(400).json({status : "fail", userStatus : "FAILED" ,message : e.message});
     }
 };

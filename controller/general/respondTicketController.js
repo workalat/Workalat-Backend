@@ -16,7 +16,7 @@ async function respondTicketController(req, res){
         let message_email;
         if(userType === "client"){
             let data = await ClientsData.findOne({_id : userId});
-            
+             
             if(data === null){
                 throw new Error("No User Data Found, please login again");
             }
