@@ -7,7 +7,8 @@ async function showAllLeadsController(req, res){
             clientName : 1,
             serviceNeeded : 1,
             serviceLocationTown : 1,
-            projectTimeStamp : 1,
+            projectTimeStamp : 1, 
+            projectStatusAdminString : 1,
             proposals : 1,
             clientId  :1
         });
@@ -24,7 +25,7 @@ async function showAllLeadsController(req, res){
         }));
         console.log("Final Data", finalData);
 
-        res.status(200).json({ status: "success", userStatus: "SUCCESS", data: finalData });
+        res.status(200).json({ status: "success", userStatus: "SUCCESS", data: finalData.reverse() });
      
     }
     catch(e){

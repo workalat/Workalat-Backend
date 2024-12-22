@@ -3,6 +3,6 @@ let memberShipController = require("../../controller/admin/memberShipController"
 
 let router = express.Router();
 
-router.get("/", memberShipController);
+router.post("/", memberShipController);
 
 module.exports = router;

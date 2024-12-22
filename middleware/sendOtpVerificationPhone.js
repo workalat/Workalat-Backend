@@ -43,6 +43,7 @@ async function sendOtpVerificationPhone(userId ,phoneNo, res){
             to: phoneNo,
             from: "+447458914253", // Your Twilio number
             twiml: `<Response><Say language="en-GB"><prosody rate="85%">Your verification code is ${formattedOtp}.             Again your verification code is ${formattedOtp}              .</prosody>        </Say></Response>`, // Message that will be read to the user
+           
         })
         .then(call => console.log( "Call Sid" ,call.sid))
         .catch(error => console.error('Error making call:', error));

@@ -6,7 +6,6 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 async function refundTransationController(req, res) {
   try {
     const  transactionId  = req.body.transactionId;
-    console.log(req.body);
     let transaction = await TransactionData.findOne({_id : transactionId});
     console.log(transaction);
 
@@ -21,10 +20,55 @@ async function refundTransationController(req, res) {
 
     // Retrieve the checkout session
     const session = await stripe.checkout.sessions.retrieve(sessionId);
-    console.log( "Session : " ,session);
 
     if (!session) {
         throw new Error("Session not found");
+    }
+
+    if(session?.mode === "subscription"){
+        // Step 2: Get the Invoice ID from the session
+        const invoiceId = session.invoice;
+        console.log("Invoice ID : " , invoiceId);
+
+        if (!invoiceId) {
+            throw new Error('Invoice not found for the session.');
+        }
+
+        // Step 3: Retrieve the Invoice Details
+        const invoice = await stripe.invoices.retrieve(invoiceId);
+        console.log("Invoice: " , invoice);
+
+           // Step 4: Get the Charge ID from the invoice
+           const chargeId = invoice.charge;
+           console.log("chargeId : " , chargeId);
+
+           if (!chargeId) {
+               throw new Error('Charge not found for the invoice.');
+           }
+   
+           // Step 5: Create a Refund
+           const refund = await stripe.refunds.create({
+               charge: chargeId,
+           });
+   
+           console.log('Refund successful:', refund);
+
+           if(refund.status === "succeeded"){
+            transaction.transactionType = "debit";
+            transaction.transactionStatus = "refunded";
+            let r = RefundData.create({
+                refundData : refund,
+                sessionId : sessionId,
+            });
+            await transaction.save();
+        }
+    
+        return res.status(200).json({
+          status: "success",
+          userStatus: "SUCCESS",
+          message: "Payment refunded successfully",
+        });
+
     }
 
     // Extract payment_intent from the session

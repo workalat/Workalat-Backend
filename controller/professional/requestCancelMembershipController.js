@@ -27,7 +27,7 @@ async function requestCancelMembershipController(req, res){
         // professionalData.membershipLeads -= 5;
         professionalData.profileStatus = "normal";
         professionalData.isMembership = false;
-        professionalData.membershipStatus = "request cancelled";
+        professionalData.membershipStatus = "request cancellation";
 
         await professionalData.save();
         res.status(200).json({status: "success", userStatus: "SUCCESS", message: "Your Cancellation Request has been submitted, It may take atleast 36-48 hours to refund your amount and cancel your membership."})

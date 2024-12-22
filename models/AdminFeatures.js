@@ -35,6 +35,13 @@ let AdminFeaturesSchema  = new mongoose.Schema({
     serviceQuestions : {
         type : Array,
         default : []
+    },
+    ranking : {
+        level_1 : {type: Number, default: 0},
+        level_2 : {type: Number, default: 0},
+        level_3 : {type: Number, default: 0},
+        level_4 : {type: Number, default: 0},
+        level_pro : {type: Number, default: 0},
     }
 
     

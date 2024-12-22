@@ -8,9 +8,24 @@ async function memberShipController(req, res){
             memberShipExpirationDate : 1,
             professionalFullName : 1,
             professionalPictureLink : 1,
+            membershipTransactionHistory : 1,
         });
 
-        res.status(200).json({ status: "success", userStatus: "SUCCESS",data : data});
+        let finalData = await Promise.all(data.map(async (val, i)=>{
+                let updateData = { ...val._doc }; // "_doc" is used to access the actual document
+                if(val !== null){
+                      // Safely access the last transaction ID
+                      const lastTransaction = val.membershipTransactionHistory?.[val.membershipTransactionHistory.length - 1];
+                      updateData.sessionId = lastTransaction?.transactionId || null; // Assign the value to sessionId
+                      delete updateData.membershipTransactionHistory;
+                  };
+                
+                return updateData;
+            
+    }));
+
+
+        res.status(200).json({ status: "success", userStatus: "SUCCESS",data : finalData.reverse()});
     }
     catch(e){
         console.log("Error while adding categories project", e);

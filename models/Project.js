@@ -110,7 +110,7 @@ let ProjectSchema  = new mongoose.Schema({
     serviceFrequencyDays:{
         type : Number,
         default : 0
-    },
+    }, 
     isProjectFile:{
         type : Boolean,
         default : false
@@ -161,6 +161,10 @@ let ProjectSchema  = new mongoose.Schema({
     maxBid : {
         type : Number,
         default : 5
+    },
+    projectStatusAdminString:{
+        type : String,
+        default : "pending"
     },
     projectStatusAdmin: {
         type : Boolean,

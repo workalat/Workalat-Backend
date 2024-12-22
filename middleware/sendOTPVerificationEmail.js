@@ -10,7 +10,7 @@ let transporter = nodemailer.createTransport({
         user : process.env.USER,
         pass : process.env.PASS
     } 
-});
+}); 
 transporter.verify((e, success)=>{
     if(e){
         console.log("Nodemailer Error : "  ,e)

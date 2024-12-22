@@ -13,15 +13,8 @@ async function allUserController(req, res){
             clientPictureLink  : 1,
             clientEmail  : 1,
             clientCountry : 1,
+            adminAccessClient : 1,
         });
-        // let clientsData = {
-        //     userName : cd.clientFullName,
-        //     userPictureLink : cd.clientPictureLink,
-        //     userEmail : cd.clientEmail,
-        //     userCountry: cd.clientCountry,
-        //     _id : cd._id,
-        //     userType : "client",
-        // };
         let clientsData = cd
             .filter((val) => val?._id,) // Filter to include only valid professional reviews
             .map((val) => {
@@ -30,16 +23,18 @@ async function allUserController(req, res){
                     userPictureLink : val.clientPictureLink,
                     userEmail : val.clientEmail,
                     userCountry: val.clientCountry,
+                    userStatus : val.adminAccessClient,
                     _id : val._id,
                     userType : "client",
                 };
                 return d; // Return the modified professionalReview object
             });
         let pd = await ProfessionalsData.find().select({
-            professionalFullName : 1,
+            professionalFullName : 1, 
             professionalPictureLink  : 1,
             professionalEmail  : 1,
             professionalCountry : 1,
+            adminAccessProfessional : 1,
         });
         let professioanlData = pd
             .filter((val) => val?._id,) // Filter to include only valid professional reviews
@@ -49,6 +44,7 @@ async function allUserController(req, res){
                     userPictureLink : val.professionalPictureLink,
                     userEmail : val.professionalEmail,
                     userCountry: val.professionalCountry,
+                    userStatus : val.adminAccessProfessional,
                     _id : val._id,
                     userType : "professional",
                 };

@@ -257,6 +257,10 @@ let ProfessionalDataSchema  = new mongoose.Schema({
         lowercase : true,
         default : "unactive"
     },
+    stripeCustomerId :{
+        type : String,
+        default : ""
+    },
     ChangingDates : [{
         passwordLast : {type : Date, default : Date.now()},
         twoFactAuthLast : {type : Date, default : Date.now()},

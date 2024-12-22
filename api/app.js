@@ -22,30 +22,19 @@ let corsOptions = {
     credentials: true,
     optionsSuccessStatus: 204
 }
+
+
+let stripeWebhookRoute = require("../Routes/professional/stripeWebhookRoute");
+
+//WEBHOOK STRIPE
+app.use("/webhook/stripe", express.raw({ type: 'application/json' })  ,stripeWebhookRoute);
+
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(bodyParser.urlencoded({ extended: false })); 
 app.use(bodyParser.json());
 app.use(cors(corsOptions))
 
-
-// let corsOptions = {
-//     origin: ['http://localhost:3000', 'http://localhost:3001', 'https://workalat-frontend.vercel.app'],
-//     methods: "GET, POST, PUT, DELETE, PATCH, HEAD",
-//     allowedHeaders: ['Content-Type', 'Authorization'],
-//     credentials: true,
-//     optionsSuccessStatus: 204
-// };
-
-// // Enable CORS
-// app.use(cors(corsOptions));
-// app.options('*', cors(corsOptions)); // Handle preflight requests
-
-// // Body parsers
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: false }));
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
 
 //MIDDLEWARES
 let verification = require("../middleware/verification");
@@ -124,6 +113,10 @@ const verifyPhoneOtpControllerWithoutIdRoute = require("../Routes/general/verify
 const verifyEmailOtpWithoutIdRoute = require("../Routes/general/verifyEmailOtpWithoutIdRoute");
 const sendEmailOtpWidRoute = require("../Routes/general/sendEmailOtpWidRoute");
 const sendPhoneOtpWidRoute = require("../Routes/general/sendPhoneOtpWidRoute");
+const verifyEmailAndPhoneRoute = require("../Routes/general/verifyEmailAndPhoneRoute");
+const trackPhoneOtpRoute = require("../Routes/general/trackPhoneOtpRoute");
+const editTaskListRoute = require("../Routes/general/editTaskListRoute");
+const deleteTaskListRoute = require("../Routes/general/deleteTaskListRoute");
 
 
 
@@ -199,6 +192,8 @@ let getMembershipDetailsRoute = require("../Routes/professional/getMembershipDet
 let walletTransactionHistoryRoute = require("../Routes/professional/walletTransactionHistoryRoute");
 let enablePayAsYouGoRoute = require("../Routes/professional/enablePayAsYouGoRoute");
 let showSingleProjectLeadRoute = require("../Routes/professional/showSingleProjectLeadRoute");
+let showCertificateRoute = require("../Routes/professional/showCertificateRoute");
+
 
 
 //Admin Routes / Milestone 3
@@ -256,6 +251,14 @@ const deleteServiceRoute = require("../Routes/admin/deleteServiceRoute");
 const addPointsWalletRoute = require("../Routes/admin/addPointsWalletRoute");
 const updateAdminRoute = require("../Routes/admin/updateAdminRoute");
 const changeTicketStatusRoute = require("../Routes/admin/changeTicketStatusRoute");
+const userAccessRoute = require("../Routes/admin/userAccessRoute");
+const lineChartFilterRoute = require("../Routes/admin/lineChartFilterRoute");
+const broadcastEmailRoute = require("../Routes/admin/broadcastEmailRoute");
+const broadCastRecipientsRoute = require("../Routes/admin/broadCastRecipientsRoute");
+const circleChartFilterRoute = require("../Routes/admin/circleChartFilterRoute");
+const getRankingDataRoute = require("../Routes/admin/getRankingDataRoute");
+const updateRankingDataRoute = require("../Routes/admin/updateRankingDataRoute");
+
 
 
 /////////////////////////////////////////////////////// API Stuffs /////////////////////////////////////////////////////////////////////////////////////
@@ -378,6 +381,11 @@ app.use("/createTicket", createTicketRoute);
 app.use("/respondTicket", respondTicketRoute);
 
 
+//WHEN A CLIENT OR PROFESSIONAL WANTS TO CREATE A TICKET
+app.use("/findVerifyData", verifyEmailAndPhoneRoute);
+
+
+
 //Toggle
 
 //WHEN CLIETNS/PROFESSIONAL VISITS PREERENCES PAGE
@@ -462,6 +470,14 @@ app.use("/resendEmailOtpWId", sendEmailOtpWidRoute);
 
 //WHEN Someone wants to verify the EMAIL OTP without USER ID
 app.use("/resendPhoneOtpWId", sendPhoneOtpWidRoute);
+
+
+//WHEN SOMEONE WANTS TO EDIT TASK LIST
+app.use("/editTask", editTaskListRoute);
+
+
+//WHEN SOMEONE WANTS TO DELETE TASK LIST
+app.use("/deleteTask", deleteTaskListRoute);
 
 
 ////////////////////////////////  CLIENT APIS ////////////////////////////////////////////
@@ -552,6 +568,7 @@ app.use("/getUserPhone", getUserPhoneNoRoute);
 
 //WHEN CLIETNS WANTS TO SIGNUP USING EMAIL AND SEND OTP
 app.use("/clientSendEmailOtp", signupClientEmailSendRoute);
+
 
 
 
@@ -675,6 +692,12 @@ app.use("/changePayAsYouGo", enablePayAsYouGoRoute);
 
 //SHOW SINGLE LEADS DATA
 app.use("/showSingleProjectLead", showSingleProjectLeadRoute);
+
+
+//SHOW ALL CERRTIFICATES
+app.use("/allCertificates", showCertificateRoute);
+
+
 
 
 ////////////////////////////////  ADMIN APIS /  MILESTONE 3 ////////////////////////////////////////////
@@ -892,9 +915,36 @@ app.use("/deletePointsWalletData", deletePointsWalletDataRoute);
 
 
 
-//DELE POINTSTE WALLET DATA
+//CHANGE TICKET STATUS
 app.use("/changeTicketStatus", changeTicketStatusRoute);
 
+
+//USER ACCESS ACCOUNT
+app.use("/userAccess", userAccessRoute);
+
+
+//LINE CHART FILTER
+app.use("/lineChart", lineChartFilterRoute);
+
+
+//CIRCLE CHART FILTER
+app.use("/circleChart", circleChartFilterRoute);
+
+
+//SEND BROADCAST EMAIL
+app.use("/sendBroadcast", broadcastEmailRoute);
+
+
+//BROADCAST RECEPIENT
+app.use("/broadcastRecipient", broadCastRecipientsRoute);
+
+
+//GET RANKING PAGE DATA
+app.use("/getRanking", getRankingDataRoute);
+
+
+//UPDATE RANKING PAGE DATA
+app.use("/updateRanking", updateRankingDataRoute);
 
 //ADMIN LOGOUT
 app.use("/logout-admin", logoutAdminRoute);

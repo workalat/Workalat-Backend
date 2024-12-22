@@ -1,5 +1,6 @@
 let ProfessionalsData = require("../../models/Professional");
 const ProjectsData = require("../../models/Project");
+const Transaction = require("../../models/Transaction");
 let stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 async function addWalletTopupDataProfessionalController(req, res) {
     // let sessionId = "cs_test_a1m1LpbMNsrQriNePWn8r7A42gp6ebOMenEO03MVLVVBF7b3NqVoaBXJZI";
@@ -40,7 +41,7 @@ async function addWalletTopupDataProfessionalController(req, res) {
                 transactionType : "credit",
                 professionalId : session.metadata.professionalId
             } ;
-            let addTransactionData = await TransactionData.create(data);
+            let addTransactionData = await Transaction.create(data);
             professional.pointsHistory.push(data);
             professional.professionalTotalBidPoints += parseFloat(session.metadata.points);
             await professional.save();

@@ -1,3 +1,4 @@
+const AdminFeaturesData = require("../../models/AdminFeatures");
 const AwardedData = require("../../models/Awarded");
 let ClientsData = require("../../models/Client");
 let ProfessionalsData = require("../../models/Professional");
@@ -8,12 +9,11 @@ async function markAsCompletedController(req, res) {
         let userId = req.body.userId;
         let userType = req.body.userType;
         let projectId = req.body.projectId;
-        console.log(req.body);
 
         if(userType === "client"){
             //Checking projects
             let project = await ProjectsData.findOne({$and : [{_id : projectId}, {awardedStatus : "awarded"}]});
-            console.log(project);
+            let rank = await AdminFeaturesData.findOe({}).select({ranking : 1});
             if(project === null){
                 throw new Error("Wrong credentials, please login again");
             };
@@ -40,16 +40,19 @@ async function markAsCompletedController(req, res) {
                 professional.totalProjectsCompleted +=1;
                 data.totalProjectsCompleted +=1;
 
-                if(professional.totalProjectsCompleted >= 50 && professional.totalProjectsCompleted <= 80){
+                if(professional.totalProjectsCompleted >= 0 && professional.totalProjectsCompleted <  rank.ranking.level_1){
+                    professional.professional_level = "1";
+                }
+                if(professional.totalProjectsCompleted >= rank.ranking.level_1 && professional.totalProjectsCompleted < rank.ranking.level_2){
                     professional.professional_level = "2";
                 }
-                if(professional.totalProjectsCompleted >= 80 && professional.totalProjectsCompleted <= 100){
+                if(professional.totalProjectsCompleted >= rank.ranking.level_2 && professional.totalProjectsCompleted < rank.ranking.level_3){
                     professional.professional_level = "3";
                 }
-                if(professional.totalProjectsCompleted >= 100 && professional.totalProjectsCompleted <= 150){
+                if(professional.totalProjectsCompleted >= rank.ranking.level_3 && professional.totalProjectsCompleted < rank.ranking.level_4){
                     professional.professional_level = "4";
                 }
-                if(professional.totalProjectsCompleted >= 150){
+                if(professional.totalProjectsCompleted > rank.ranking.level_4 && professional.totalProjectsCompleted >= rank.ranking.level_pro){
                     professional.professional_level = "5";
                 }
             }
@@ -99,27 +102,43 @@ async function markAsCompletedController(req, res) {
                 data.totalProjectsCompleted +=1;
                 client.totalProjectsCompleted +=1;
 
-                if(data.totalProjectsCompleted >= 50 && data.totalProjectsCompleted <= 80){
+                // if(data.totalProjectsCompleted >= 50 && data.totalProjectsCompleted <= 80){
+                //     data.professional_level = "2";
+                // }
+                // if(data.totalProjectsCompleted >= 80 && data.totalProjectsCompleted <= 100){
+                //     data.professional_level = "3";
+                // }
+                // if(data.totalProjectsCompleted >= 100 && data.totalProjectsCompleted <= 150){
+                //     data.professional_level = "4";
+                // }
+                // if(data.totalProjectsCompleted >= 150){
+                //     data.professional_level = "5";
+                // }
+
+                if(data.totalProjectsCompleted >= 0 && data.totalProjectsCompleted <  rank.ranking.level_1){
+                    data.professional_level = "1";
+                }
+                if(data.totalProjectsCompleted >= rank.ranking.level_1 && data.totalProjectsCompleted < rank.ranking.level_2){
                     data.professional_level = "2";
                 }
-                if(data.totalProjectsCompleted >= 80 && data.totalProjectsCompleted <= 100){
+                if(data.totalProjectsCompleted >= rank.ranking.level_2 && data.totalProjectsCompleted < rank.ranking.level_3){
                     data.professional_level = "3";
                 }
-                if(data.totalProjectsCompleted >= 100 && data.totalProjectsCompleted <= 150){
+                if(data.totalProjectsCompleted >= rank.ranking.level_3 && data.totalProjectsCompleted < rank.ranking.level_4){
                     data.professional_level = "4";
                 }
-                if(data.totalProjectsCompleted >= 150){
+                if(data.totalProjectsCompleted > rank.ranking.level_4 && data.totalProjectsCompleted >= rank.ranking.level_pro){
                     data.professional_level = "5";
                 }
-            }
+                }
             
-            if(awarded.awardedStatusClient === "completed" && awarded.ProjectStatusProfessional==="completed"){
-                awarded.projectStatus = "completed";
-            }
-            await project.save();
-            await awarded.save();
-            await data.save();
-            await client.save();
+                if(awarded.awardedStatusClient === "completed" && awarded.ProjectStatusProfessional==="completed"){
+                    awarded.projectStatus = "completed";
+                }
+                await project.save();
+                await awarded.save();
+                await data.save();
+                await client.save();
 
             res.status(200).json({status : "success", userStatus : "SUCCESS", message : "Status updated to completed successfully", currentStatus : project.projectStatusProfessional});
         }

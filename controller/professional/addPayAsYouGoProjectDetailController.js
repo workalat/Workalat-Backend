@@ -42,7 +42,8 @@ async function payAsYouGoProjectController(req, res) {
                 transactionType : "credit",
                 professionalId : session.metadata.professionalId
             }
-            let addTransactionData = await TransactionData.create(data);
+            
+            let addTransactionData = await TransactionData.create(data); 
             professional.pointsHistory.push(data);
             professional.professionalTotalBidPoints += parseFloat(session.metadata.points);
             
