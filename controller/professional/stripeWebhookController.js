@@ -31,6 +31,7 @@ async function stripeWebhookController(req, res) {
                 const invoice = event.data.object;
                 const session = await fetchCheckoutSession(invoice.customer);
                 if (session) {
+                    console.log("invoice.payment_succeeded called by arham")
                     await handlePaymentSucceeded(invoice, session);
                     break;
                 }
@@ -40,7 +41,7 @@ async function stripeWebhookController(req, res) {
 
             case "customer.subscription.deleted":
                 const invoice2 = event.data.object;
-                const session2 = await fetchCheckoutSession("cus_RRNCF0DBpZeIKc");
+                const session2 = await fetchCheckoutSession(invoice2.customer);
                 if (session2) {
                     await handleSubscriptionCancellation(invoice2,session2);
                     break;
