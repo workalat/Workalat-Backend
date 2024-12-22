@@ -9,11 +9,12 @@ async function markAsCompletedController(req, res) {
         let userId = req.body.userId;
         let userType = req.body.userType;
         let projectId = req.body.projectId;
+        let rank = await AdminFeaturesData.findOne({}).select({ranking : 1});
 
         if(userType === "client"){
             //Checking projects
             let project = await ProjectsData.findOne({$and : [{_id : projectId}, {awardedStatus : "awarded"}]});
-            let rank = await AdminFeaturesData.findOne({}).select({ranking : 1});
+            console.log(rank)
             if(project === null){
                 throw new Error("Wrong credentials, please login again");
             };
