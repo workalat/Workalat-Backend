@@ -53,7 +53,7 @@ async function allTicketsDataController(req, res){
     }));
 
 
-        res.status(200).json({status: "success", userStatus : "SUCCESS" , data: finalData});
+        res.status(200).json({status: "success", userStatus : "SUCCESS" , data: finalData.reverse()});
         
     }
     catch(e){

@@ -18,7 +18,7 @@ async function showallKycDataController(req, res){
              'kyc.lastName' : 1,
              'kyc._id' : 1,
             });
-             res.status(200).json({ status: "success", userStatus: "SUCCESS", data: clientData });
+             res.status(200).json({ status: "success", userStatus: "SUCCESS", data: clientData.reverse() });
         }
         else{
             let professionalData = await ProfessionalsData.find({
@@ -30,7 +30,7 @@ async function showallKycDataController(req, res){
                 'kyc.lastName' : 1,
                 'kyc._id' : 1,
                });
-                res.status(200).json({ status: "success", userStatus: "SUCCESS", data: professionalData });
+                res.status(200).json({ status: "success", userStatus: "SUCCESS", data: professionalData.reverse() });
         }
      
     }

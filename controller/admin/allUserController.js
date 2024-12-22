@@ -28,7 +28,7 @@ async function allUserController(req, res){
                     userType : "client",
                 };
                 return d; // Return the modified professionalReview object
-            });
+            }).reverse();
         let pd = await ProfessionalsData.find().select({
             professionalFullName : 1, 
             professionalPictureLink  : 1,
@@ -49,7 +49,7 @@ async function allUserController(req, res){
                     userType : "professional",
                 };
                 return d; // Return the modified professionalReview object
-            });
+            }).reverse();
         // let professioanlData = {
         //     userName : pd.professionalFullName,
         //     userPictureLink : pd.professionalPictureLink,
