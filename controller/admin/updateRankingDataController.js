@@ -3,8 +3,6 @@ const ProfessionalsData = require("../../models/Professional");
 async function updateRankingDataController(req, res){
     try{
         let rank = req.body.rank;  
-        console.log(req.body);
-
         let data = await AdminFeaturesData.findOneAndUpdate({}, {$set: { ranking: rank }}, {new : true}).select({ranking : 1});
         console.log(data);
 

@@ -9,7 +9,7 @@ let transporter = nodemailer.createTransport({
     auth : {
         user : process.env.USER,
         pass : process.env.PASS
-    } 
+    }
 }); 
 transporter.verify((e, success)=>{
     if(e){

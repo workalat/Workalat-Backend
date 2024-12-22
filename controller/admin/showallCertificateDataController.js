@@ -14,20 +14,6 @@ async function showallCertificateDataController(req, res){
             'certifications.professionalName' : 1,
             'certifications._id' : 1
         }); 
-        // let d = data?.map((val)=>{
-        //     let finalData= val.certifications.map((v)=>{
-        //         let final = {
-        //             professionalName : v.professionalName,
-        //             status : v.status,
-        //             timeStamp : v.timeStamp,
-        //             certificateId : v._id,
-        //             userId : val._id
-        //         };
-        //         return(final);
-        //     });
-        //     return(...finalData);
-        // });
-        // console.log(d);
         let finalData = data.flatMap((val) =>
             val.certifications.map((v) => ({
               professionalName: v.professionalName,
@@ -39,7 +25,7 @@ async function showallCertificateDataController(req, res){
           );
       
           console.log(finalData);
-        res.status(200).json({status : "success", userStatus : "SUCCESS",  data : finalData})
+        res.status(200).json({status : "success", userStatus : "SUCCESS",  data : finalData.reverse()})
      
     }
     catch(e){

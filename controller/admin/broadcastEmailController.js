@@ -28,6 +28,10 @@ const getTransporter = (from) => {
       port: process.env.BROADCAST_SMTP_PORT,
       secure: process.env.BROADCAST_SMTP_SECURE === "true", // true for 465, false for 587
       auth: { user: config.user, pass: config.pass },
+      pool: true,
+      maxConnections: 5,
+      rateLimit: 5, // Max 5 emails per second
+      rateDelta: 1000, // Time window in ms
     });
 }
 
