@@ -1,3 +1,4 @@
+const ClientsData = require("../../models/Client");
 let ProfessionalsData = require("../../models/Professional");
 
 async function professionalDetailsController(req, res){
@@ -23,9 +24,26 @@ async function professionalDetailsController(req, res){
             totalProjectsCompleted : 1,
             professionalSkills : 1
         });
-        console.log(data);
         if(data !== null){
-            res.status(200).json({status : "success", userStatus : "SUCCESS", message : "Data Found Successfully" ,data : data});
+            
+              // Convert the document to a plain object to allow modifications
+              let dataObj = data.toObject();
+              let finalData = await Promise.all(dataObj.reviews.map(async (val, i)=>{
+                      let clientData = await ClientsData.findOne({_id : val.giverId}).select({
+                          clientCountry : 1, 
+                      });
+                      let updateData = { ...val._doc }; // "_doc" is used to access the actual document
+                      if(clientData !== null){
+                          updateData.giverCountry = clientData.clientCountry;
+                      };
+                      return {
+                          ...val, // Retain original proposal properties
+                          ...(clientData && { giverCountry: clientData.clientCountry }) // Add professionalCountry only if available
+                      };
+                  
+              }));
+              dataObj.reviews = finalData;
+              res.status(200).json({status : "success", userStatus : "SUCCESS", message : "Data fetched successfully", data: dataObj});
         }
         else{
             throw new Error("No Data Found")

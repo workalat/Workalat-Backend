@@ -3,6 +3,7 @@ let bcrypt = require("bcryptjs");
 let OtpVerificationData = require("../models/OtpVerification");
 const ClientsData = require("../models/Client");
 const ProfessionalsData = require("../models/Professional");
+let otpTheme = require("../components/email-themes/otpTheme");
 
 let transporter = nodemailer.createTransport({
     host : process.env.HOST,
@@ -32,8 +33,8 @@ async function sendOtpVerificationEmail({_id, email, userType,verificationType, 
         let mailOption={
             from : process.env.USER,
             to : email,
-            subject : "Verify your WorkAlot Account with your Email",
-            html: `<p>Your one time password (OTP) is ${otp}, please enter this to verify your account. <br />  This code will expire in 1 hour. </p>`
+            subject : "Verify Workalot Account.",
+            html: otpTheme({otp}) 
         }
 
         //hash the otp
