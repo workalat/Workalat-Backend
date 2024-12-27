@@ -16,7 +16,7 @@ const twilio = require('twilio');
  
 //Cors Setup 
 let corsOptions = {
-    origin: ["http://localhost:3000","http://localhost:3001","https://workalat-frontend.vercel.app" ],
+    origin: ["http://localhost:3000","http://localhost:3001","" ],
     methods: "GET, POST, PUT, DELETE, PATCH, HEAD",
     allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Origin'],
     credentials: true,
