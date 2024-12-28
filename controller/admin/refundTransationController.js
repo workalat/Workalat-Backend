@@ -11,7 +11,7 @@ async function refundTransationController(req, res) {
 
     if (!transaction || transaction === null) {
       return res.status(400).json({
-        status: "fail",
+        status: "fail", 
         userStatus: "FAILED",
         message: "Session ID is required",
       });
